@@ -1,0 +1,18 @@
+{
+  "name": "userservice",
+  "version": "1.0.0",
+  "description": "service that will handle employer and employee registration",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aryan S Delloson",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.14"
+  }
+}
