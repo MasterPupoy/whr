@@ -11,7 +11,7 @@ Working Human is a project in progress that aims to be at par with the smart HR 
 # Directories
 <dl>
   <dt>gateway</dt>
-  <dd>A nodejs gateway that acts as an API gateway that proxies all api services and runs authentication</dd>
+  <dd>A nodejs gateway that acts as an API gateway that proxies all api services and runs on authentication on api requests</dd>
   <dt>applicantService</dt>
   <dd>API service for handling applicants and postings</dd>
   <dt>userService</dt>
