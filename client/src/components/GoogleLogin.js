@@ -9,7 +9,7 @@ export default function GoogleLoginButton({text, classes }){
 
   return (
     <GoogleLogin 
-      clientId='357723066529-kv0gd2tf8gqbglv56kfe48h8hos6259f.apps.googleusercontent.com'
+      clientId='842483895353-150apkaevqhkd24hv70rqf13v2if15no.apps.googleusercontent.com'
       buttonText={text}
       onSuccess={authenticateGoogleLogin}
       onFailure={authenticateGoogleLogin}
