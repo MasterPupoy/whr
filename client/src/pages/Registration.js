@@ -9,6 +9,11 @@ export default function Register(){
     <div className='register-container'>
       <div className='register-card'>
         <Form className="register-form">
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Label>Company Name</Form.Label>
+            <Form.Control type="email" placeholder="Company" />
+          </Form.Group>
+
            <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>Fullname</Form.Label>
             <Form.Control type="email" placeholder="Fullname" />
