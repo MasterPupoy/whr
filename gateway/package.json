@@ -14,6 +14,7 @@
     "express-http-proxy": "^1.6.2",
     "fast-gateway": "^2.9.3",
     "http-proxy-middleware": "^2.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.12.14",
     "nodemon": "^2.0.7",
     "pg": "^8.6.0"
