@@ -1,7 +1,9 @@
-const userService = require('express')();
+const express = require('express');
+const userService = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/userRoutes')
+const employeeRoutes = require('./routes/employeeRoutes');
+const companyRoutes = require('./routes/companyRoutes');
 
 require('dotenv').config();
 
@@ -10,8 +12,8 @@ const PORT = process.env.PORT || 5002;
 // DB_URI on env
 const DB_URI = process.env.DB_URI;
 
-app.use(cors());
-app.use(express.json());
+userService.use(cors());
+userService.use(express.json());
 
 // configure mongoose
 mongoose.connect(`${DB_URI}`, {
@@ -22,7 +24,8 @@ mongoose.connect(`${DB_URI}`, {
 mongoose.connection.once('open', () => console.log('Connected to MongoDB atlas'));
 
 // configure routes
-app.use('/', userRoutes);
+userService.use('/employee', employeeRoutes);
+userService.use('/organization', companyRoutes);
 
 userService.listen(PORT, () => {
   console.log(`user service running on PORT: ${PORT}`);
