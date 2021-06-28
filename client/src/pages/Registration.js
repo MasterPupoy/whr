@@ -1,6 +1,6 @@
 import React  from "react"
 import { Form } from 'react-bootstrap';
-import CustomButton from "../components/Button";
+import CustomButton from "../components/CustomButton";
 import GoogleLoginButton from "../components/GoogleLogin";
 import '../css/register.css'
 

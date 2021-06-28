@@ -29,15 +29,14 @@ module.exports.registerEmployee = (params) => {
  
 // if email length is greater than 0 (exists), return true. If not, return false
 module.exports.emailExists = (params) => {
-  return User.find({ official_email : params.email }).then(email => {
-    (email.length > 0) ? true : false
+  return Employee.find({ official_email : params.email }).then(email => {
+    return (email.length > 0) ? true : false
   });
 };
 
 // enter login credentials and once accepted, return a token 
-module.exports.login = (params) => {
-
-  return Employee.findOne({official_email : params.email}).then((employee, err) => {
+module.exports.login = async (params) => {
+  return await Employee.findOne({ official_email : params.email}).then((employee, err) => {
     console.log(params)
     console.log(employee);
 
@@ -52,7 +51,11 @@ module.exports.login = (params) => {
     const passwordMatched = async () => await bcrypt.compareSync(params.password, employee.password).catch(error => handleErr(error));
 
     if (passwordMatched){
-      return { access : auth.createAccessToken(employee.toObject())}
+      return { 
+        access : auth.createAccessToken(employee.toObject()),
+        id : employee._id,
+        cid: employee.company_id
+      }
     }else{
       return { error : 'incorrect password '}
     };  
