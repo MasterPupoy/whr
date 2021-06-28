@@ -7,20 +7,29 @@ import {
 import Login from './pages/Login';
 import Register from './pages/Registration';
 import Dashboard from './pages/Dashboard';
-
+import NotFound from './pages/NotFound';
+import { token } from './auth/token';
 
 function App() {
+   
   return(
     <Router>
       <Switch>  
         <Route exact path="/">
-          <Login />
+          <Login  />
         </Route>
         <Route exact path="/register">
           <Register />
         </Route>
         <Route exact path="/dashboard">
-          <Dashboard />
+          {(token) ? 
+            <Dashboard /> 
+            :
+            <Login />
+          }
+        </Route>
+        <Route exact path="*">
+          <NotFound />
         </Route>
       </Switch>
     </Router>

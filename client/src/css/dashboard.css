@@ -1,0 +1,88 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.topbar {
+  position: fixed;
+  padding: 4px 0px 0px 100px;
+  z-index: 2;
+  height: 55px;
+  width: 100%;
+  color: #fff;
+  font-size: 25px;
+  font-family: "Montserrat", sans-serif;
+  box-shadow: 3px 1px 5px 0px rgba(33, 34, 44, 0.37);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: #f3904f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #3b4371,
+    #f3904f
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #3b4371,
+    #f3904f
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.topbar #logoutButton {
+  margin-left: 69%;
+  font-size: 12px;
+  height: 45px;
+  width: 45px;
+  background: #274472;
+  border: 1px solid #274472;
+  border-radius: 100px;
+}
+
+.sidenav {
+  height: 100%;
+  width: 60px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 75px;
+  box-shadow: 3px 1px 5px 0px rgba(33, 34, 44, 0.37);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.sidenav li a {
+  text-align: center;
+  margin: 10px 0px 10px 0px;
+  padding: 13px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 1s ease-out;
+}
+
+.sidenav ul {
+  list-style-type: none;
+  padding-left: 5px;
+}
+
+.sidenav a:hover {
+  transition: 0.25s ease;
+  color: #f1f1f1;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 5px;
+}
+
+.main {
+  margin-left: 70px; /* Same as the width of the sidenav */
+  font-size: 28px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+.muted {
+  font-size: 12px;
+  color: #818181;
+}

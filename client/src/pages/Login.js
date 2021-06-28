@@ -1,19 +1,19 @@
-import React, { useRef, useState, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import PropTypes from 'prop-types';
+import { Link, Redirect } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import CustomButton from '../components/CustomButton';
 import GoogleLoginButton from '../components/GoogleLogin';
 import Alert from '../components/Alert';
-import userContext from '../contexts/userContext';
 import '../css/login.css';
 
 
-export default function Login(){
+export default function Login({ setToken }){
   const loginEmail = useRef(null);
   const loginPassword = useRef(null);
   const [showError, setShowError] = useState(false);
-  const [user, setUser] = useState('');
-
+  // success state to fire the redirect on state change
+  const [success, setSuccess] = useState(false);
   
 
   /* 
@@ -25,7 +25,11 @@ export default function Login(){
   const onLogin = async (e) => {
     e.preventDefault(); 
     
-    const loginRes = await fetch(`http://localhost:5000/whr/employee/login`, {
+    if(!loginEmail.current.value || !loginPassword.current.value){
+      return setShowError(true);
+    };
+
+    await fetch(`http://localhost:5000/whr/employee/login`, {
       method: 'POST',
       headers: {
         'Content-Type' : 'application/json'
@@ -35,9 +39,17 @@ export default function Login(){
         password: loginPassword.current.value
       })
     }).then(res => res.json()).then(data => { 
-      setUser(data);
-    });
+      
+      if(data.error){
+        setShowError(true);
+      };
 
+      localStorage.setItem('id', data.id);
+      localStorage.setItem('cid', data.cid);
+
+      localStorage.setItem('token', data.access);
+      setSuccess(true);
+    });
 
   }
 
@@ -47,7 +59,7 @@ export default function Login(){
 
         <Alert 
           classes='login-alert' 
-          text='Invalid username or password' 
+          text='Invalid username or password'
           show={showError} 
           onClick={() => setShowError(prevState => !prevState)}  
         />
@@ -66,6 +78,7 @@ export default function Login(){
             <CustomButton 
               text="Log-in" 
             />
+            {(success) ? <Redirect to='/dashboard' />: null}
             <GoogleLoginButton 
               text="Sign-in with Google" 
               classes="google-login" 
@@ -82,3 +95,7 @@ export default function Login(){
     </div>
   );
 };
+
+Login.propTypes = {
+  setToken: PropTypes.func.isRequired
+}
