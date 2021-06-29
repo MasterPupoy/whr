@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const companyController = require('../controllers/company');
 const { handleErr } = require('../utils');
+const auth = require('../auth/auth');
 
 // company and owner registration route
 router.post('/register', (req, res) => {
@@ -20,6 +21,17 @@ router.post('/register', (req, res) => {
     companyController.register(params).then(registered => res.send(registered));
   }catch(error){
     handleErr(error);
+  };
+});
+
+router.get('/:company_id', auth.verify, (req, res) => {
+  let params = {
+    company_id : req.params.company_id
+  }
+  try{
+    companyController.getCompany(params).then(company => res.send(company));
+  }catch(error){
+    handleErr(error)
   };
 });
 

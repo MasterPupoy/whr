@@ -38,3 +38,7 @@ module.exports.register = (params) =>  {
   });
 };
 
+module.exports.getCompany = (params) => {
+  return Company.findById(params.company_id).then(company => company);
+};
+

@@ -54,7 +54,8 @@ module.exports.login = async (params) => {
       return { 
         access : auth.createAccessToken(employee.toObject()),
         id : employee._id,
-        cid: employee.company_id
+        cid: employee.company_id,
+        oa : employee.owner
       }
     }else{
       return { error : 'incorrect password '}
@@ -64,12 +65,13 @@ module.exports.login = async (params) => {
 
 // google login 
 module.exports.verifyGoogleLogin = async (token) => {
+  console.log(token);
   const client = new OAuth2Client(clientKey);
 
   // await google verification
   const data = await client.verifyIdToken({
     idToken: token,
-    audience: client
+    audience: '842483895353-150apkaevqhkd24hv70rqf13v2if15no.apps.googleusercontent.com'
   });
 
   /*
@@ -80,7 +82,12 @@ module.exports.verifyGoogleLogin = async (token) => {
     const employee = await Employee.findOne({ official_email : data.payload.email });
     
     if (employee){
-      return { access: auth.createAccessToken(employee.toObject())};
+      return { 
+        access: auth.createAccessToken(employee.toObject()),
+        id : employee._id,
+        cid: employee.company_id,
+        oa : employee.owner
+      };
     }else{
       return { error : 'unindentified employee'}
     };

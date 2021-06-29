@@ -24,7 +24,8 @@ router.post('/login', (req, res) => {
 // google login 
 router.post('/googleLogin', async (req, res) => {
   try{
-    const authenticatedUser = await employeeController.verifyGoogleLogin(req.body.tokenId)
+    console.log(req.body);
+    res.send(await employeeController.verifyGoogleLogin(req.body.tokenId));
   }catch(error){
     handleErr(error);
   }
