@@ -1,20 +1,24 @@
 import React, { useRef, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import CustomButton from '../components/CustomButton';
 import GoogleLoginButton from '../components/GoogleLogin';
 import Alert from '../components/Alert';
 import '../css/login.css';
+import { GATEWAY_URL } from '../helper';
 
-
-export default function Login({ setToken }){
+export default function Login(){
   const loginEmail = useRef(null);
   const loginPassword = useRef(null);
   const [showError, setShowError] = useState(false);
+  const [error, setError] = useState('');
   // success state to fire the redirect on state change
   const [success, setSuccess] = useState(false);
-  
+  const [loading, setLoading] = useState(false);
+
+  if (success) {
+    return <Redirect to='/dashboard' />
+  }
 
   /* 
     login on submit with the email and password 
@@ -24,12 +28,16 @@ export default function Login({ setToken }){
 
   const onLogin = async (e) => {
     e.preventDefault(); 
+    setLoading(true);
     
     if(!loginEmail.current.value || !loginPassword.current.value){
-      return setShowError(true);
+      setShowError(true);
+      setError('Invalid username or password');
+      
+      return setLoading(false);
     };
 
-    await fetch(`http://localhost:5000/whr/employee/login`, {
+    await fetch(`${GATEWAY_URL}/whr/employee/login`, {
       method: 'POST',
       headers: {
         'Content-Type' : 'application/json'
@@ -46,12 +54,39 @@ export default function Login({ setToken }){
 
       localStorage.setItem('id', data.id);
       localStorage.setItem('cid', data.cid);
-
       localStorage.setItem('token', data.access);
       setSuccess(true);
+     
     });
+  };
 
-  }
+  const googleAuthentication = async (response) => {
+    setLoading(true);
+    console.log(response);
+
+    await fetch(`${GATEWAY_URL}/whr/employee/googleLogin`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+        tokenId: response.tokenId
+      })
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+
+      if(data.error){
+        setShowError(true);
+        setError('Your email is not registered to any organization');
+        setLoading(false);
+      }else{
+        localStorage.setItem('id', data.id);
+        localStorage.setItem('cid', data.cid);
+        localStorage.setItem('token', data.access);
+        setSuccess(true);
+      };
+    });
+  };
 
   return (
     <div className="page-container">
@@ -59,7 +94,7 @@ export default function Login({ setToken }){
 
         <Alert 
           classes='login-alert' 
-          text='Invalid username or password'
+          text={error}
           show={showError} 
           onClick={() => setShowError(prevState => !prevState)}  
         />
@@ -75,11 +110,14 @@ export default function Login({ setToken }){
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" placeholder="Password" ref={loginPassword} />
             </Form.Group>
+
             <CustomButton 
-              text="Log-in" 
+            text="Log-in"
+            isLoading={loading}
             />
-            {(success) ? <Redirect to='/dashboard' />: null}
+            
             <GoogleLoginButton 
+              authenticateGoogleLogin={googleAuthentication}
               text="Sign-in with Google" 
               classes="google-login" 
             />
@@ -95,7 +133,3 @@ export default function Login({ setToken }){
     </div>
   );
 };
-
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}

@@ -7,7 +7,6 @@ export default function SomeAlert({ text, classes, show, onClick }){
     <Alert show={show} onClick={onClick} className={classes} variant='danger'>
       <Alert.Heading>Oops!</Alert.Heading>
         <p>{text}</p>
-        <hr />
     </Alert>
   );
 };

@@ -1,11 +1,7 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 
-export default function GoogleLoginButton({text, classes }){
-
-  const authenticateGoogleLogin = () => {
-
-  }
+export default function GoogleLoginButton({text, classes, authenticateGoogleLogin }){
 
   return (
     <GoogleLogin 

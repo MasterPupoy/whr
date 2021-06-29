@@ -1,0 +1,16 @@
+.heading {
+  padding-top: 65px;
+  box-shadow: 3px 1px 5px 0px rgba(33, 34, 44, 0.37);
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.dashboard-title {
+  background: #e5e5e5;
+  color: #000;
+  font-size: 20px;
+  border-bottom: 4px solid #c70039;
+  border-radius: 2px;
+  padding: 2px 5px 2px 5px;
+  margin-left: 10px;
+}

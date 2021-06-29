@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from 'react-bootstrap';
 import { GiAbstract002 } from 'react-icons/gi';
+import companyContext from '../contexts/companyContext';
 import { getInitials } from '../helper';
+import './component_styles/topbar.css'
 
-export default function Topbar({ company_name, classes, logo }){
+export default function Topbar(){
+  const company = useContext(companyContext);
+  console.log(company)
+
   return (
-    <div className={classes}>
+    <div className='topbar'>
       <GiAbstract002 />
-      <span> {company_name} Talent Center</span>
-      <Button id='logoutButton'>{getInitials(company_name)}</Button>
-      
+      <span> {company.company_name} Talent Center</span>
+      <Button id='logoutButton'>{(company) ? getInitials(company.company_name) : null}</Button>  
     </div>
-  )
-}
+  );
+};

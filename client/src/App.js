@@ -8,7 +8,6 @@ import Login from './pages/Login';
 import Register from './pages/Registration';
 import Dashboard from './pages/Dashboard';
 import NotFound from './pages/NotFound';
-import { token } from './auth/token';
 
 function App() {
    
@@ -22,11 +21,7 @@ function App() {
           <Register />
         </Route>
         <Route exact path="/dashboard">
-          {(token) ? 
-            <Dashboard /> 
-            :
-            <Login />
-          }
+          <Dashboard /> 
         </Route>
         <Route exact path="*">
           <NotFound />
