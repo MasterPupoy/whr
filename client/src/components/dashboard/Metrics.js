@@ -4,17 +4,23 @@ import { BsPeopleFill } from 'react-icons/bs';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { GiAbstract050 } from 'react-icons/gi';
 import Title from '../Title';
-import { capitalize } from '../../helper';
 import './css/metrics.css'; 
 import userContext from '../../contexts/userContext';
+import companyContext from '../../contexts/companyContext';
 
 export default function Metrics(){
   const elevated = useContext(userContext);
+  const company = useContext(companyContext);
 
+  
   return(
     <>
      <Title icon={<GiAbstract050 />} title='My Dashboard' />
-      {(elevated?.owner === 'true') ? 
+     <div className='table-head'>
+      <h5>Hey there {elevated?.first_name}!</h5>
+      <span className='time'> Your last login was on {elevated?.last_login}</span>
+     </div>
+      {(elevated?.owner === true) ? 
         <>
           <div className='first-metric-container'>
             <div className='interview-table'>
@@ -131,13 +137,13 @@ export default function Metrics(){
                 Offers Accepted
               </ListGroup.Item>
             </ListGroup>
-            <button className='add'>+</button>
+            
           </div>
         </>
         :
         <div className='first-metric-container'>
           <div className='interview-table'>
-            <h5 className='table-head'>Hey there {(elevated) ? capitalize(elevated?.first_name) : null}!</h5>
+            <h5 className='table-head'>Workplace @ <span className='title'>{company?.company_name}</span></h5>
             <Table striped bordered hover>
                 {/*<thead>
                   <tr>

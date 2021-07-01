@@ -56,16 +56,7 @@
   font-family: "Roboto", sans-serif;
 }
 
-.add {
-  position: fixed;
-  width: 60px;
-  height: 60px;
-  bottom: 40px;
-  right: 40px;
-  background-image: linear-gradient(-105deg, #009acc, #363795);
-  color: #fff;
-  border-radius: 50px;
-  text-align: center;
-  font-size: 40px;
-  z-index: 1;
+.time {
+  font-family: "Roboto", sans-serif;
+  font-size: 12px;
 }

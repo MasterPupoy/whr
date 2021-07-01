@@ -17,7 +17,7 @@ export default function Login(){
   const [loading, setLoading] = useState(false);
 
   if (success) {
-    return <Redirect to='/dashboard' />
+    return <Redirect to='/dashboard/me' />
   }
 
   /* 
@@ -57,6 +57,18 @@ export default function Login(){
       localStorage.setItem('token', data.access);
       setSuccess(true);
      
+      fetch(`${GATEWAY_URL}/whr/employee/${data.id}`, {
+      method: 'PUT',
+      headers : {
+        'Authorization':`${localStorage.getItem('token')}`,
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+        last_login : new Date().toString()
+      })
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+    });
     });
   };
 

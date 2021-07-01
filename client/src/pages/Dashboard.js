@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Sidebar from '../components/dashboard/Sidebar';
+import { BrowserRouter as Router, Route, Switch, useRouteMatch, Redirect } from 'react-router-dom';
 import Topbar from '../components/Topbar';
 import Metrics from '../components/dashboard/Metrics';
 import Inbox from '../components/dashboard/Inbox';
@@ -13,13 +12,16 @@ import userContext from '../contexts/userContext';
 import companyContext from '../contexts/companyContext';
 import '../css/dashboard.css'
 import { GATEWAY_URL } from '../helper';
+import Sidebar from '../components/dashboard/Sidebar';
 
 
 export default function Dashboard(){
+  const { path } = useRouteMatch();
   const token = localStorage.getItem('token');
   const [user, setUser] = useState();
   const [company, setCompany] = useState('');
-  
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [redirect, setRedirect] = useState(false);
   
   useEffect(() => {
     fetch(`${GATEWAY_URL}/whr/employee/me`, {
@@ -40,7 +42,33 @@ export default function Dashboard(){
       }).then(res => res.json()).then(company => setCompany(company));
     });
   }, [])
+  
+  const logout = () => {
+    let date = new Date().toString()
+    console.log(date);
+    fetch(`${GATEWAY_URL}/whr/employee/${localStorage.getItem('id')}`, {
+      method: 'PUT',
+      headers : {
+        'Authorization':`${localStorage.getItem('token')}`,
+        'Content-Type':'application/json'
+      },
+      body: JSON.stringify({
+        last_logout : date
+      })
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+      if(data){
+        localStorage.clear();
+        setLoggedIn(false);
+        setRedirect(true);
+      }
+    });
 
+  };
+
+  if(redirect){
+    return <Redirect to='/' />
+  }
 
   if(!token){
     return <Login />
@@ -50,29 +78,17 @@ export default function Dashboard(){
     <div>
     <Router>
       <companyContext.Provider value={company}>
-        <Topbar />
-        <userContext.Provider value={user}>
-          <Sidebar classes='sidenav' />
+        <userContext.Provider value={user}> 
+        <Topbar logged={loggedIn} logout={logout} />
+        <Sidebar classes='sidenav' elevated={user} />
         <div className='main'>
             <Switch>
-              <Route path='/dashboard'>
-                <Metrics />
-              </Route>
-              <Route path='/inbox'>
-                <Inbox />
-              </Route>
-              <Route path='/settings'>
-                <Settings />
-              </Route>
-              <Route path='/reports'>
-                <Reports />
-              </Route>
-              <Route path='/recruitment'>
-                <Recruitment />
-              </Route>
-              <Route path='/employees'>
-                <Employees />
-              </Route>
+              <Route path={`${path}/me`} component={Metrics} />
+              <Route path={`${path}/inbox`} component={Inbox} />
+              <Route path={`${path}/settings`} component={Settings} />
+              <Route path={`${path}/reports`} component={Reports} />
+              <Route path={`${path}/recruitment`} component={Recruitment} />
+              <Route path={`${path}/employees`} component={Employees} />
             </Switch>
         </div>
         </userContext.Provider>

@@ -5,7 +5,7 @@
   height: 55px;
   width: 100%;
   color: #fff;
-  font-size: 25px;
+  font-size: 20px;
   font-family: "Montserrat", sans-serif;
   box-shadow: 3px 1px 5px 0px rgba(33, 34, 44, 0.37);
   border-radius: 2px;
@@ -27,7 +27,6 @@
   margin-left: 69%;
   font-size: 12px;
   height: 45px;
-  width: 45px;
   background: #274472;
   border: 1px solid #274472;
   border-radius: 100px;
@@ -35,4 +34,43 @@
 
 .topbar #logoutButton:hover {
   box-shadow: 1px 1px 2px 2px rgba(33, 34, 44, 0.37);
+}
+
+.modal_container {
+  padding: 50px 90px 0px 10px;
+}
+
+.modal_button {
+  display: block;
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  margin: 10px;
+  padding: 5px 100px 5px 5px;
+  border-radius: 3px;
+  border: 0px;
+  background: none;
+}
+
+.modal_button:hover {
+  background: #d6d6d6;
+  cursor: pointer;
+}
+
+.account {
+  display: block;
+  font-size: 15px;
+  font-family: "Roboto", sans-serif;
+  margin-top: 20px;
+  padding-left: 20px;
+}
+
+.logout {
+  display: block;
+  font-size: 12px;
+  margin-top: 20px;
+  padding-left: 20px;
+}
+
+.account_container {
+  width: 300px;
 }

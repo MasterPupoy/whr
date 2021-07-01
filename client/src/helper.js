@@ -1,10 +1,4 @@
-export const getInitials = (name) => {
-  let initials = name.slice(0,2);
-  
-  return(initials)
-};
-
-export function capitalize(str) {
+export function capitalize(str = 'company') {
     let remaining = [];
     for (let i = 1; i < str.length; i++) {
         remaining += str[i];
