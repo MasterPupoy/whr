@@ -19,6 +19,7 @@ userService.use(express.json());
 mongoose.connect(`${DB_URI}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
+  useFindAndModify: false
 });
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB atlas'));

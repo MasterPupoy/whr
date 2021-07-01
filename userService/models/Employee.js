@@ -93,6 +93,12 @@ const employeeSchema = new Schema({
   },
   compensation: {
     type: String
+  },
+  last_login : {
+    type: String,
+  },
+  last_logout : {
+    type: String,
   }
 }, { timestamps: true }); 
 

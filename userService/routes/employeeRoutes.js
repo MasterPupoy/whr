@@ -88,6 +88,9 @@ router.put('/:employee_id', auth.verify, (req, res) => {
   let params = req.params.employee_id;
   let update = Updates.includeUpdates(req);
 
+  console.log(params)
+  console.log(req.body)
+  console.log(update)
   employeeController.editDetails(params, update).then(updatedEmployee => res.send(updatedEmployee));
 });
 

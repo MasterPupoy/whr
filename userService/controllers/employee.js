@@ -37,9 +37,6 @@ module.exports.emailExists = (params) => {
 // enter login credentials and once accepted, return a token 
 module.exports.login = async (params) => {
   return await Employee.findOne({ official_email : params.email}).then((employee, err) => {
-    console.log(params)
-    console.log(employee);
-
     if(err){
       handleErr(err);
     };
@@ -124,8 +121,12 @@ module.exports.getEmployee = (params) => {
   });
 };
 
+// edit details 
 module.exports.editDetails = (params, updates) => {
   return Employee.findByIdAndUpdate(params, { $set : updates}, { new : true}).then(employee => {
-    console.log(employee);
+    return (employee) ? true : false;
   });
 };
+
+
+

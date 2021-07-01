@@ -76,6 +76,14 @@ module.exports.includeUpdates = (req, res, next) => {
     updates.compensation = data.compensation
   };
 
+  if(data.last_login){
+    updates.last_login = data.last_login
+  };
+
+  if(data.last_logout){
+    updates.last_logout = data.last_logout
+  }
+
   return updates;
 
 }
