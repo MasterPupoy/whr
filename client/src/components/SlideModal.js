@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import styles from './component_styles/SlideModal.css'
+import './component_styles/SlideModal.css'
 
-export default function SlideModal({ modalStyle, children, show }){
+export default function SlideModal({ modalStyle = 'modal', modalBackdrop = 'modal_backdrop', children, show }){
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -15,8 +15,8 @@ export default function SlideModal({ modalStyle, children, show }){
 
    return (
         <React.Fragment>
-           <div ref={modalRef} className='modal_backdrop'>
-            <div className='modal'>
+           <div ref={modalRef} className={modalBackdrop}>
+            <div className={modalStyle}>
               {children}
             </div>
            </div>

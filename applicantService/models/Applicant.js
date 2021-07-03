@@ -6,7 +6,7 @@ const applicantSchema = new Schema({
     type: Schema.Types.ObjectId, ref: 'Company'
   },
   job_id: {
-    type: Schema.Types.ObjectId, ref: 'Company'
+    type: Schema.Types.ObjectId, ref: 'Job'
   },
   first_name: {
     type : String
@@ -28,6 +28,10 @@ const applicantSchema = new Schema({
   },
   application_status: {
     type: Number
+  },
+  applied_on:{
+    type: String,
+    default: new Date().toString()
   },
   rejected: {
     type: Boolean
@@ -51,7 +55,7 @@ const applicantSchema = new Schema({
    street: {
      type: String
    },
-   state: {
+   province: {
      type: String
    },
    city: {
@@ -73,7 +77,18 @@ const applicantSchema = new Schema({
     default: 'n/a'
   },
   experiences: [{
-     type: String
+     company: {
+       type: String 
+     },
+     position: {
+       type: String
+     },
+     date_started: {
+       type: String
+     },
+     date_ended: {
+       type: String
+     }
   }]
 }, { timestamps: true });
 

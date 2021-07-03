@@ -8,16 +8,18 @@ import Login from './pages/Login';
 import Register from './pages/Registration';
 import Dashboard from './pages/Dashboard';
 import Careers from './pages/Careers';
-import NotFound from './pages/NotFound'
+import Openings from './pages/Openings';
 
 function App() {
    
   return(
     <Router>
       <Switch>  
-        <Route exact path="/" component={Login} />
+        <Route exact path="/" component={Careers} />
         <Route exact path="/register" component={Register} />
         <Route exact path="/careers" component={Careers} />
+        <Route exact path="/openings" component={Openings} />
+        <Route exact path="/login" component={Login} />
         <Route exact path="/dashboard" render={() => {
           <Dashboard routes={[
               {

@@ -1,0 +1,67 @@
+/*font-family: 'Lobster', cursive;
+font-family: 'Merienda', cursive;*/
+
+p {
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+}
+
+.banner {
+  text-align: right;
+}
+
+.row_careers {
+  padding: 100px 0px 20px 0px;
+}
+
+.heading_top {
+  font-family: "Merienda", cursive;
+  font-size: 50px;
+}
+
+.logo {
+  border-radius: 10px;
+  box-shadow: 3px 1px 5px 0px rgba(33, 34, 44, 0.37);
+}
+
+.careers_button {
+  height: 45px;
+  width: 100%;
+  text-align: center;
+  border-radius: 0;
+  border: 1px solid #274472;
+  background-color: #274472;
+  font-family: "Montserrat", sans-serif;
+  color: #d9d9d9;
+  margin: 5px;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.register_button {
+  height: 45px;
+  width: 100%;
+  text-align: center;
+  border-radius: 0;
+  border: 1px solid #274472;
+  background-color: #274472;
+  font-family: "Montserrat", sans-serif;
+  color: #d9d9d9;
+  margin: 5px;
+  text-decoration: none;
+  padding: 10px;
+}
+
+.careers_button:hover,
+.register_button:hover {
+  transition: 0.5s ease;
+  background-color: #5885af;
+  border: 1px solid #5885af;
+  color: #fff;
+}
+
+.banner_qoute {
+  margin-top: 60px;
+  font-family: "Merienda", cursive;
+  font-size: 50px;
+}

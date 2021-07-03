@@ -20,7 +20,7 @@ export default function Topbar({ logout }){
       <div className='topbar'>
         <GiAbstract002 />
         <span>{company?.company_name} Talent Center</span>
-        <Button id='logoutButton' onClick={options} >{company?.company_name}</Button>
+        <Button id='logoutButton' onClick={options} >{user?.first_name}</Button>
         <SlideModal show={show}>
           <div className='account_container'>
             <span className='account'>{user?.official_email}</span>

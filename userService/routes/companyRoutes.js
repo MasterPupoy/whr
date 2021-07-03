@@ -9,7 +9,7 @@ router.post('/register', (req, res) => {
     company_name: req.body.company_name,
     company_owner: req.body.company_owner,
     industry: req.body.industry,
-    first_name: req.bodyfirst_name,
+    first_name: req.body.first_name,
     last_name: req.body.last_name,
     phone_numbers : req.body.phone_numbers,
     designation: req.body.designation,

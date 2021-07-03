@@ -11,12 +11,13 @@ require('dotenv').config();
 const PORT = process.env.PORT || 5002;
 // DB_URI on env
 const DB_URI = process.env.DB_URI;
+const DB_LOCAL = process.env.DB_LOCAL;
 
 userService.use(cors());
 userService.use(express.json());
 
 // configure mongoose
-mongoose.connect(`${DB_URI}`, {
+mongoose.connect(`${DB_LOCAL}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false

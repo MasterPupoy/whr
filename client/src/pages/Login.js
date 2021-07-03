@@ -6,6 +6,8 @@ import GoogleLoginButton from '../components/GoogleLogin';
 import Alert from '../components/Alert';
 import '../css/login.css';
 import { GATEWAY_URL } from '../helper';
+import whr_enterprise from '../static/whr2.png'
+import icon from '../static/whr2_icon.png';
 
 export default function Login(){
   const loginEmail = useRef(null);
@@ -49,32 +51,31 @@ export default function Login(){
     }).then(res => res.json()).then(data => { 
       
       if(data.error){
-        setShowError(true);
-      };
+       return setShowError(true);
+      }
 
       localStorage.setItem('id', data.id);
       localStorage.setItem('cid', data.cid);
-      localStorage.setItem('token', data.access);
+      localStorage.setItem('act', data.access);
       setSuccess(true);
-     
+    
       fetch(`${GATEWAY_URL}/whr/employee/${data.id}`, {
       method: 'PUT',
       headers : {
-        'Authorization':`${localStorage.getItem('token')}`,
+        'Authorization':`${localStorage.getItem('act')}`,
         'Content-Type':'application/json'
       },
       body: JSON.stringify({
         last_login : new Date().toString()
       })
     }).then(res => res.json()).then(data => {
-      console.log(data)
+      return data
     });
     });
   };
 
   const googleAuthentication = async (response) => {
     setLoading(true);
-    console.log(response);
 
     await fetch(`${GATEWAY_URL}/whr/employee/googleLogin`, {
       method: 'POST',
@@ -85,7 +86,6 @@ export default function Login(){
         tokenId: response.tokenId
       })
     }).then(res => res.json()).then(data => {
-      console.log(data)
 
       if(data.error){
         setShowError(true);
@@ -94,7 +94,7 @@ export default function Login(){
       }else{
         localStorage.setItem('id', data.id);
         localStorage.setItem('cid', data.cid);
-        localStorage.setItem('token', data.access);
+        localStorage.setItem('act', data.access);
         setSuccess(true);
       };
     });
@@ -102,8 +102,19 @@ export default function Login(){
 
   return (
     <div className="page-container">
+      
       <div className="login-container">
-
+        <img 
+          className='logo' 
+          style={{
+            marginRight : '400px',
+            width : '300px',
+            height : '300px'
+          }} 
+          src={whr_enterprise} 
+          alt='whr logo' 
+        />
+        
         <Alert 
           classes='login-alert' 
           text={error}
@@ -113,6 +124,20 @@ export default function Login(){
 
         <div className="login-card">
           <Form className="login-form" onSubmit={onLogin}>
+            <div className='brand_logo'>
+            <img 
+              className='logo' 
+              style={{
+                display : 'inline',
+                width : '40px',
+                height : '40px',
+                marginRight: '10px'
+              }} 
+              src={icon} 
+              alt='whr logo' 
+              />
+            <h3 style={{fontFamily: "Roboto, sans-serif"}}>Working Human <sup>R</sup></h3>
+            </div>
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" ref={loginEmail} />

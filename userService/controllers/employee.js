@@ -62,7 +62,6 @@ module.exports.login = async (params) => {
 
 // google login 
 module.exports.verifyGoogleLogin = async (token) => {
-  console.log(token);
   const client = new OAuth2Client(clientKey);
 
   // await google verification
@@ -105,7 +104,7 @@ module.exports.getMe = (params) => {
     employee.password = '';
     
     return employee;
-  }).catch(err => console.log(err));
+  }).catch(err => handleErr(err));
 };
 
 // get employee details
@@ -123,8 +122,8 @@ module.exports.getEmployee = (params) => {
 
 // edit details 
 module.exports.editDetails = (params, updates) => {
-  return Employee.findByIdAndUpdate(params, { $set : updates}, { new : true}).then(employee => {
-    return (employee) ? true : false;
+  return Employee.findByIdAndUpdate(params, { $set : updates}, { new : true}).then((employee, err) => {
+    return (err) ? handlErr(err) : true;
   });
 };
 

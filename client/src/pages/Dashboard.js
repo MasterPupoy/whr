@@ -17,7 +17,7 @@ import Sidebar from '../components/dashboard/Sidebar';
 
 export default function Dashboard(){
   const { path } = useRouteMatch();
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('act');
   const [user, setUser] = useState();
   const [company, setCompany] = useState('');
   const [loggedIn, setLoggedIn] = useState(true);
@@ -27,21 +27,20 @@ export default function Dashboard(){
     fetch(`${GATEWAY_URL}/whr/employee/me`, {
       method : 'GET',
       headers : {
-        'Authorization' : `${localStorage.getItem('token')}`
+        'Authorization' : `${token}`
       },
     }).then(res => res.json()).then(employee => {
       
-      setUser(employee)
-      console.log(employee)
+      setUser(employee);  
 
       fetch(`${GATEWAY_URL}/whr/organization/${employee.company_id}`, {
         method : 'GET',
         headers : {
-          'Authorization' : `${localStorage.getItem('token')}`
+          'Authorization' : `${token}`
         },
       }).then(res => res.json()).then(company => setCompany(company));
     });
-  }, [])
+  }, [token])
   
   const logout = () => {
     let date = new Date().toString()
@@ -49,7 +48,7 @@ export default function Dashboard(){
     fetch(`${GATEWAY_URL}/whr/employee/${localStorage.getItem('id')}`, {
       method: 'PUT',
       headers : {
-        'Authorization':`${localStorage.getItem('token')}`,
+        'Authorization':`${token}`,
         'Content-Type':'application/json'
       },
       body: JSON.stringify({
