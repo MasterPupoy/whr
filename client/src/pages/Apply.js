@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Redirect } from 'react-router-dom';
 import { Navbar, Nav, Container, Spinner, Form, Row, Col, Button } from 'react-bootstrap';
 import { AiOutlineForm } from 'react-icons/ai';
 import { GATEWAY_URL } from '../helper';
@@ -19,6 +19,8 @@ export default function ApplicationModal(props){
   const zip_code = useRef(null);
   const message = useRef(null);
   const expected_compensation = useRef(null);
+  const [file, setFile] =  useState();
+  const [sucess, setSuccess] = useState(false);
 
   let { id } = useParams();
   
@@ -28,7 +30,53 @@ export default function ApplicationModal(props){
       method: 'GET'
     }).then(res => res.json()).then(data => setJob(data));
 
-  }, [id, job]);
+  }, [id]);
+
+  console.log(job)
+
+  const apply = async (e) => {
+    e.preventDefault()
+    console.log('fired');
+
+    await fetch(`${GATEWAY_URL}/apply/openings/register`, {
+      method : 'POST',
+      headers : {
+        'Content-Type' : 'application/json'
+      },
+      body : JSON.stringify({
+        company_id: `${job.company_id._id}`,
+        job_id: `${job._id}`,
+        first_name: first_name.current.value.trim(),
+        last_name: last_name.current.value.trim(),
+        date_of_birth: date_of_birth.current.value.trim(),
+        gender: gender.current.value.trim(),
+        phone_numbers: Number(phone_number.current.value.trim()),
+        designation: `${job.title}`,
+        official_email: official_email.current.value.trim(),
+        address: {
+          street: street.current.value.trim(),
+          province: province.current.value.trim(),  
+          city: city.current.value.trim(),
+          zip_code: zip_code.current.value.trim(),
+        },
+        expected_compensation: expected_compensation.current.value.trim(),
+        message: message.current.value.trim(),
+        })
+      }).then(res => res.json()).then(applicant => {
+       
+        let formData = new FormData()
+        formData.append('file', file);
+          
+        fetch(`${GATEWAY_URL}/file/upload/${applicant._id}`, {
+          method: 'POST',
+          body : formData
+        }).then(res => res.text()).then(data => (data) ? setSuccess(true) : {});
+      });
+  };
+
+  if(sucess){
+    return <Redirect to='/openings' />
+  };
 
   return (
     <>
@@ -69,8 +117,8 @@ export default function ApplicationModal(props){
               <p>{job.type}</p>
             </div>
             <hr />
-            <div style={{paddingTop : '30px'}}>
-              <Form >
+            <div style={{padding : '30px 40px'}}>
+              <Form onSubmit={apply}>
                 <h3><AiOutlineForm /> Application Form</h3>
 
                 <Form.Group controlId="first_name">
@@ -90,23 +138,24 @@ export default function ApplicationModal(props){
 
                   <Form.Group  controlId="date_of_birth">
                     <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control type="date" placeholder="Select One" ref={date_of_birth} />
+                    <Form.Control type="date" placeholder="Select One" ref={date_of_birth} required/>
                   </Form.Group>
 
                 <Row>
 
                   <Form.Group as={Col} controlId="Gender">
-                    <Form.Label>Sex</Form.Label>
+                    <Form.Label>Gender</Form.Label>
                       <Form.Control as="select" placeholder="Select One" ref={gender}>
                         <option>Select One</option>
                         <option>Male</option>
                         <option>Female</option>
+                        <option>Prefer not to say</option>
                       </Form.Control>
                   </Form.Group>
 
                   <Form.Group  controlId="phone_number">
                     <Form.Label>Phone Number</Form.Label>
-                    <Form.Control type="text" placeholder="Select One" ref={phone_number} />
+                    <Form.Control type="text" placeholder="Select One" ref={phone_number} required/>
                   </Form.Group>
 
 
@@ -116,17 +165,17 @@ export default function ApplicationModal(props){
 
                   <Form.Group as={Col} controlId="street">
                     <Form.Label>Street</Form.Label>
-                    <Form.Control type="text" placeholder="Compensation" ref={street} required/>
+                    <Form.Control type="text" placeholder="street" ref={street} required/>
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="street">
                     <Form.Label>City</Form.Label>
-                    <Form.Control type="text" placeholder="Compensation" ref={city} required/>
+                    <Form.Control type="text" placeholder="city" ref={city} required/>
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="street">
                     <Form.Label>Province</Form.Label>
-                    <Form.Control type="text" placeholder="Compensation" ref={province} required/>
+                    <Form.Control type="text" placeholder="province" ref={province} required/>
                   </Form.Group>
 
                 </Row>
@@ -144,6 +193,11 @@ export default function ApplicationModal(props){
                 <Form.Group controlId="message">
                   <Form.Label>Message</Form.Label>
                   <Form.Control as="textarea" rows={6} ref={message} />
+                </Form.Group>
+
+                <Form.Group controlId="formFile" style={{paddingTop : '30px'}} className="mb-3">
+                  <Form.Label>Upload Resume</Form.Label>  
+                  <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
                 </Form.Group>
 
                 <Button type='submit' variant='success'>Apply</Button>

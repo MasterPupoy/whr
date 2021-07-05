@@ -39,7 +39,7 @@ export default function Login(){
       return setLoading(false);
     };
 
-    await fetch(`${GATEWAY_URL}/whr/employee/login`, {
+    let loginResponse = await fetch(`${GATEWAY_URL}/whr/employee/login`, {
       method: 'POST',
       headers: {
         'Content-Type' : 'application/json'
@@ -81,6 +81,12 @@ export default function Login(){
       return data
     });
     }).catch(err => console.log(err))
+  
+    if(loginResponse === null){
+      setError('Something went wrong! Error code : 500')
+      return setShowError(true);
+    }
+
   };
 
   const googleAuthentication = async (response) => {

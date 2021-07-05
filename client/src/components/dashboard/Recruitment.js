@@ -43,6 +43,7 @@ export default function Recruitment(){
       fetch(`${GATEWAY_URL}/apply/openings/applications/all/${company._id}`, {
         method: 'GET'
       }).then(res => res.json()).then(data => {
+        console.log(data)
         setTalentPool(data);
       });
     };
@@ -115,16 +116,24 @@ export default function Recruitment(){
                 <div className='higherdiv'>
                   {(candidates.length > 0) ? 
                     <div className='jobs_container'>
-                      <Table striped bordered hover>
+                      <Table  hover>
                         <thead>
                           <tr>
                             <th>Position Applied</th>
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email Address</th>
-                            <th>Application Status</th>
+                            <th
+                              style={{
+                                textAlign : 'center'
+                              }}
+                            >
+                              Application Status
+                            </th>
                             <th>Expected Compensation</th>
                             <th>Phone Number</th>
+                            <th></th>
+                            <th></th>
                           </tr>
                         </thead>
                         <tbody>
@@ -135,7 +144,13 @@ export default function Recruitment(){
                                   <td>{candidate.first_name}</td>
                                   <td>{candidate.last_name}</td>
                                   <td>{candidate.official_email}</td>
-                                  <td>{candidate.application_status}</td>
+                                  <td
+                                    style={{
+                                      textAlign : 'center'
+                                    }}
+                                  >
+                                    {candidate.application_status}
+                                  </td>
                                   <td>{candidate.expected_compensation}</td>
                                   <td>{candidate.phone_numbers}</td>
                                   <td><button className='interview_button'>Set Interview</button></td>
@@ -174,24 +189,37 @@ export default function Recruitment(){
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Email Address</th>
-                            <th>Application Status</th>
+                            <th 
+                              style={{
+                                textAlign : 'center'
+                              }}
+                            >
+                              Application Status
+                            </th>
                             <th>Expected Compensation</th>
                             <th>Phone Number</th>
+                            <th>Rejected</th>
                           </tr>
                         </thead>
                         <tbody>
-                        {candidates.map((candidate, i) => {
+                        {talent_pool.map((candidate, i) => {
                           return (   
                                 <tr key={i}>
                                   <td>{candidate.job_id.title}</td>
                                   <td>{candidate.first_name}</td>
                                   <td>{candidate.last_name}</td>
                                   <td>{candidate.official_email}</td>
-                                  <td>{candidate.application_status}</td>
+                                  <td
+                                    style={{
+                                      textAlign : 'center'
+                                    }}
+                                  >
+                                    {candidate.application_status}
+                                  </td>
                                   <td>{candidate.expected_compensation}</td>
                                   <td>{candidate.phone_numbers}</td>
-                                  <td><button className='interview_button'>Set Interview</button></td>
-                                  <td><button className='reject_button'>Reject</button></td>
+                                  <td>{(candidate.rejected) ? 'YES' : 'NO'}</td>
+                                  <td><button className='interview_button'>Contact</button></td>
                                 </tr>
                               )
                             })

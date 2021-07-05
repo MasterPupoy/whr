@@ -42,7 +42,7 @@
   transform: translate(800px, 0);
 }
 
-.visible .modal {
+.visible .modal_custom {
   opacity: 1;
   transform: translate(200px, 0);
   transition: transform 250ms 500ms ease;
