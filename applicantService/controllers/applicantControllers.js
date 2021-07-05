@@ -36,11 +36,13 @@ module.exports.registerApplicant = (params) => {
       console.log(err);
     }
 
-    return Job.findByIdAndUpdate(applicant.job_id, { 
+    Job.findByIdAndUpdate(applicant.job_id, { 
       $inc : {
         applications : 1 
       }
     }).then(err => (err) ? console.log(err) : true);
+
+    return applicant
   });
 };
 

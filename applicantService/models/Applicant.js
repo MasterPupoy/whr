@@ -89,7 +89,11 @@ const applicantSchema = new Schema({
      date_ended: {
        type: String
      }
-  }]
+  }],
+  resume: {
+    type: String,
+    default : null
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Applicant', applicantSchema, 'Applicants');
