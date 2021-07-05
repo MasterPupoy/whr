@@ -1,0 +1,21 @@
+{
+  "name": "fileservice",
+  "version": "1.0.0",
+  "description": "File service for resume uploads and other files",
+  "main": "fileService.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./fileService.js"
+  },
+  "author": "Aryan S. Delloson",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "mongoose": "^5.13.2",
+    "multer": "^1.4.2",
+    "nodemon": "^2.0.9"
+  }
+}
