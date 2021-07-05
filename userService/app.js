@@ -5,10 +5,11 @@ const mongoose = require('mongoose');
 const employeeRoutes = require('./routes/employeeRoutes');
 const companyRoutes = require('./routes/companyRoutes');
 
+const PORT = 5002;
+
 require('dotenv').config();
 
 // use environment PORT or 5002. Update USER_SERVICE_URL on gateway if altered
-const PORT = process.env.PORT || 5002;
 // DB_URI on env
 const DB_URI = process.env.DB_URI;
 const DB_LOCAL = process.env.DB_LOCAL;
@@ -21,7 +22,7 @@ mongoose.connect(`${DB_URI}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
-});
+}).catch(err => console.log(err));
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB atlas'));
 

@@ -37,7 +37,7 @@ module.exports.emailExists = (params) => {
 // enter login credentials and once accepted, return a token 
 module.exports.login = async (params) => {
   return await Employee.findOne({ official_email : params.email}).then((employee, err) => {
-    console.log(employee);
+
     if(err){
       handleErr(err);
     };
@@ -48,7 +48,6 @@ module.exports.login = async (params) => {
     
     const passwordMatched = bcrypt.compareSync(params.password, employee.password);
 
-    console.log(passwordMatched);
     if (passwordMatched){
       return { 
         access : auth.createAccessToken(employee.toObject()),
@@ -97,7 +96,7 @@ module.exports.verifyGoogleLogin = async (token) => {
 
 // get all employees
 module.exports.getAllEmployees = (params) => {
-  return Employees.find({ company_id : params.company_id }).then(employees => employees);
+  return Employee.find({ company_id : params.company_id }).then(employees => employees);
 };
 
 // get user details 
@@ -106,7 +105,7 @@ module.exports.getMe = (params) => {
     employee.password = '';
     
     return employee;
-  }).catch(err => handleErr(err));
+  }).catch(err => console.log(err));
 };
 
 // get employee details

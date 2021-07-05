@@ -7,14 +7,14 @@ const Updates = require('./employeeUpdates');
 // employee api routes
 
 // regular login route
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   let params = {
     email: req.body.email,
     password: req.body.password
   }
 
   try{
-    employeeController.login(params).then(authentication => res.send(authentication))
+    await employeeController.login(params).then(authentication => res.send(authentication))
   } catch(error) {
     handleErr(error)
   };
@@ -44,11 +44,11 @@ router.get('/emailCheck', (req, res) => {
 });
 
 // get all employee
-router.get('/employees', auth.verify, (req, res) => {
+router.post('/employees', auth.verify, (req, res) => {
   let params = {
     company_id: req.body.company_id
   };
-
+  
   try{
     employeeController.getAllEmployees(params).then(employees => res.send(employees));
   }catch(error){
