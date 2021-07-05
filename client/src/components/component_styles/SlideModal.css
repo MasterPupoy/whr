@@ -18,7 +18,7 @@
   z-index: 1;
 }
 
-.modal {
+.modal_custom {
   color: #000;
   overflow-y: hidden;
   overflow-x: hidden;

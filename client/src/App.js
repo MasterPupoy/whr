@@ -9,6 +9,7 @@ import Register from './pages/Registration';
 import Dashboard from './pages/Dashboard';
 import Careers from './pages/Careers';
 import Openings from './pages/Openings';
+import Apply from './pages/Apply';
 
 function App() {
    
@@ -19,6 +20,7 @@ function App() {
         <Route exact path="/register" component={Register} />
         <Route exact path="/careers" component={Careers} />
         <Route exact path="/openings" component={Openings} />
+        <Route exact path="/apply/:id" component={Apply} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/dashboard" render={() => {
           <Dashboard routes={[

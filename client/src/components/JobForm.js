@@ -46,7 +46,7 @@ export default function JobForm({ onClick }){
         setup: setup.current.value.trim(), 
         experience: experience.current.value.trim(),
         type: type.current.value.trim(), 
-        salary: salary.current.value.trim(), 
+        salary: `P ${salary.current.value.trim()}`, 
         description: description.current.value.trim(),
         remote : (setup.current.value.trim().toLowerCase() === 'remote') ? true : false 
       })

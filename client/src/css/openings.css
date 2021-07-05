@@ -5,3 +5,41 @@
   border-radius: 5px;
   font-family: "Montserrat", sans-serif;
 }
+
+.apply_now_button {
+  margin-left: 420px; 
+  padding: 10px 40px;
+  text-decoration: none;
+  border: 1px solid ;
+  border-radius: 5px;
+  color: white;
+  background: linear-gradient(91deg, #3b4371, #f3904f);
+  background-size: 400% 400%;
+}
+
+.apply_now_button:hover{
+
+  color: #fff;
+  -webkit-animation: apply_now 2s ease infinite;
+  -moz-animation: apply_now 2s ease infinite;
+  animation: apply_now 2s ease infinite;
+}
+
+@-webkit-keyframes apply_now {
+    0%{background-position:0% 58%}
+    50%{background-position:100% 43%}
+    100%{background-position:0% 58%}
+}
+@-moz-keyframes apply_now {
+    0%{background-position:0% 58%}
+    50%{background-position:100% 43%}
+    100%{background-position:0% 58%}
+}
+@keyframes apply_now {
+    0%{background-position:0% 58%}
+    50%{background-position:100% 43%}
+    100%{background-position:0% 58%}
+}
+  
+
+

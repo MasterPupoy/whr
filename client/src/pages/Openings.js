@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Navbar, Nav, Row, Col, Spinner, Button, Modal } from 'react-bootstrap';
+import { Container, Navbar, Nav, Row, Col, Spinner } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { GATEWAY_URL } from '../helper';
 import whr from '../static/whr3.png';
 import whr_small from '../static/whr3_small.png';
+import { GiConqueror } from 'react-icons/gi';
 import '../css/careers.css';
 import '../css/openings.css';
-import SlideModal from '../components/SlideModal';
+
 
 export default function Careers(){
   const [jobs, setJobs] = useState([]);
-  const [show, setShow] = useState(false);
 
   useEffect(() => {
     fetch(`${GATEWAY_URL}/apply/jobs/all`,{
@@ -20,11 +21,6 @@ export default function Careers(){
     }).then(res => res.json()).then(data => setJobs(data))
   }, []);
 
-  const apply = (job_id, company_id) => {
-
-  }
-
-  console.log(show);
 
   return(
     <>
@@ -82,34 +78,32 @@ export default function Careers(){
                         <h5>{job.salary}</h5>
                         <h5>{job.type}</h5>
                         <p>{job.description}</p>
-                        <Button 
-                          style={{
-                            marginLeft: '420px', 
-                            padding: '5px 40px'
-                          }} 
-                          variant='success'
-                          onClick={() => setShow(prevState => !prevState)}
+                        <Link
+                          className='apply_now_button'
+                          to={`/apply/${job._id}`}
                         >
                           Apply Now!
-                        </Button>
+                        </Link>
                       </Col>
                   </Row>
                   )
                 })}
               </div>
               : 
-              <Spinner animation="border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </Spinner>
+              <div style={{ textAlign: 'center'}}>
+                <Spinner animation="border" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </Spinner>
+              </div>
             }
           </div>
           :
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
+          <div>
+            <GiConqueror /><br />
+            <h3>Hang in there! Opportunities are coming your way.</h3>
+          </div>
         }
-  
-      
+
       </Container>
     </>
   )

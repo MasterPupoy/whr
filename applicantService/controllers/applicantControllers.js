@@ -81,9 +81,7 @@ module.exports.hire = (params) => {
             console.log(err)
           }
 
-          let newRandomPassword = getRandomIntPassword().toString();
-
-          console.log(newRandomPassword);
+          let newRandomPassword = getRandomIntPassword().toString(); 
 
           let newEmployee = new Employee({
             company_id: applicant.company_id,

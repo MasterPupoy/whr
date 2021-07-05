@@ -50,9 +50,17 @@ export default function Login(){
       })
     }).then(res => res.json()).then(data => { 
       
-      if(data.error){
+
+      if(data.error === "incorrect password"){
+        setError('Invalid username or password')
+        return setShowError(true)
+      };
+
+      if(!data){
+        setError('Something went wrong! Contact your WHR admin')
        return setShowError(true);
-      }
+      };
+
 
       localStorage.setItem('id', data.id);
       localStorage.setItem('cid', data.cid);
@@ -69,9 +77,10 @@ export default function Login(){
         last_login : new Date().toString()
       })
     }).then(res => res.json()).then(data => {
+
       return data
     });
-    });
+    }).catch(err => console.log(err))
   };
 
   const googleAuthentication = async (response) => {
@@ -107,7 +116,7 @@ export default function Login(){
         <img 
           className='logo' 
           style={{
-            marginRight : '400px',
+            marginRight : '300px',
             width : '300px',
             height : '300px'
           }} 

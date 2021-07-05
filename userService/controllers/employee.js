@@ -37,6 +37,7 @@ module.exports.emailExists = (params) => {
 // enter login credentials and once accepted, return a token 
 module.exports.login = async (params) => {
   return await Employee.findOne({ official_email : params.email}).then((employee, err) => {
+    console.log(employee);
     if(err){
       handleErr(err);
     };
@@ -45,8 +46,9 @@ module.exports.login = async (params) => {
       return {error : 'email does not exists'}
     };
     
-    const passwordMatched = async () => await bcrypt.compareSync(params.password, employee.password).catch(error => handleErr(error));
+    const passwordMatched = bcrypt.compareSync(params.password, employee.password);
 
+    console.log(passwordMatched);
     if (passwordMatched){
       return { 
         access : auth.createAccessToken(employee.toObject()),
@@ -55,7 +57,7 @@ module.exports.login = async (params) => {
         oa : employee.owner
       }
     }else{
-      return { error : 'incorrect password '}
+      return { error : 'incorrect password'}
     };  
   }).catch(error => console.log(error));
 };

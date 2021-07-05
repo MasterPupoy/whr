@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import './component_styles/SlideModal.css'
 
-export default function SlideModal({ modalStyle = 'modal', modalBackdrop = 'modal_backdrop', children, show }){
+export default function SlideModal({ modalStyle = 'modal_custom', modalBackdrop = 'modal_backdrop', children, show }){
   const modalRef = useRef(null);
 
   useEffect(() => {

@@ -48,7 +48,7 @@ module.exports.getCompanySpecificJobs = (params) => {
 
 // get job details
 module.exports.getJob = (params) => {
-  return Job.findById({ _id : params.job_id }).then((job, err) => {
+  return Job.findById({ _id : params.job_id }).populate('company_id').then((job, err) => {
     if(err){
       console.log(err)
     }

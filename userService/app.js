@@ -17,7 +17,7 @@ userService.use(cors());
 userService.use(express.json());
 
 // configure mongoose
-mongoose.connect(`${DB_LOCAL}`, {
+mongoose.connect(`${DB_URI}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
