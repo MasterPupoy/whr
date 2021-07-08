@@ -37,6 +37,7 @@ module.exports.getAllJob = (params) => {
 
 // get jobs from specific company 
 module.exports.getCompanySpecificJobs = (params) => {
+
   return Job.find({ company_id : params.company_id }).then((jobs, err) => {
     if(err){
       console.log(err);

@@ -122,24 +122,24 @@ export default function ApplicationModal(props){
                 <h3><AiOutlineForm /> Application Form</h3>
 
                 <Form.Group controlId="first_name">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" placeholder="Firstname" ref={first_name} required/>
-                  </Form.Group>
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control type="text" placeholder="Firstname" ref={first_name} required/>
+                </Form.Group>
 
-                  <Form.Group controlId="last_name">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" placeholder="Lastname" ref={last_name} required/>
-                  </Form.Group>
+                <Form.Group controlId="last_name">
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control type="text" placeholder="Lastname" ref={last_name} required/>
+                </Form.Group>
 
-                  <Form.Group controlId="official_email">
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control type="text" placeholder="Lastname" ref={official_email} required/>
-                  </Form.Group>
+                <Form.Group controlId="official_email">
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control type="text" placeholder="Lastname" ref={official_email} required/>
+                </Form.Group>
 
-                  <Form.Group  controlId="date_of_birth">
-                    <Form.Label>Date of Birth</Form.Label>
-                    <Form.Control type="date" placeholder="Select One" ref={date_of_birth} required/>
-                  </Form.Group>
+                <Form.Group  controlId="date_of_birth">
+                  <Form.Label>Date of Birth</Form.Label>
+                  <Form.Control type="date" placeholder="Select One" ref={date_of_birth} required/>
+                </Form.Group>
 
                 <Row>
 

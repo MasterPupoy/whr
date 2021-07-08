@@ -10,8 +10,6 @@ export default function Employees(){
   const [employees, setEmployees] = useState([]);
   const cid = localStorage.getItem('cid');
 
-  console.log(cid)
-
   useEffect(() => {
 
     fetch(`${GATEWAY_URL}/whr/employee/employees`, {
@@ -44,7 +42,6 @@ export default function Employees(){
                             <p>{employee.first_name} {employee.last_name}</p>
                             <p>{employee.designation}</p>
                             <p>{employee.official_email}</p>
-                            <p style={{fontSize : '10px'}}>{employee.last_login}</p>
                             <div>
                               {(employee._id === localStorage.getItem('id')) ? 
                                 <span>Active</span>

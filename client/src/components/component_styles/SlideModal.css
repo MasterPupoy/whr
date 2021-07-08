@@ -5,22 +5,23 @@
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  overflow-y: scroll;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 250ms 700ms ease;
+  transition: 250ms ease;
 }
 
 .visible {
   pointer-events: auto;
   opacity: 1;
-  transition: all 300ms ease-in-out;
+  /*transition: all 300ms ease-in-out;*/
   position: fixed;
   z-index: 1;
 }
 
 .modal_custom {
   color: #000;
-  overflow-y: hidden;
+  overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
   display: block;

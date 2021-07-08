@@ -14,32 +14,45 @@ import '../css/dashboard.css'
 import { GATEWAY_URL } from '../helper';
 import Sidebar from '../components/dashboard/Sidebar';
 
-
 export default function Dashboard(){
   const { path } = useRouteMatch();
   const token = localStorage.getItem('act');
   const [user, setUser] = useState();
-  const [company, setCompany] = useState('');
+  const [company, setCompany] = useState();
   const [loggedIn, setLoggedIn] = useState(true);
   const [redirect, setRedirect] = useState(false);
-  
-  useEffect(() => {
-    fetch(`${GATEWAY_URL}/whr/employee/me`, {
-      method : 'GET',
-      headers : {
-        'Authorization' : `${token}`
-      },
-    }).then(res => res.json()).then(employee => {
-      
-      setUser(employee);  
 
-      fetch(`${GATEWAY_URL}/whr/organization/${employee.company_id}`, {
+
+  useEffect(() => {
+    let mounted = true
+
+    if(mounted) {
+
+      fetch(`${GATEWAY_URL}/whr/employee/me`, {
         method : 'GET',
         headers : {
           'Authorization' : `${token}`
         },
-      }).then(res => res.json()).then(company => setCompany(company));
-    });
+      }).then(res => res.json()).then(employee => {
+        
+        setUser(employee);  
+      
+        fetch(`${GATEWAY_URL}/whr/organization/${employee.company_id}`, {
+          method : 'GET',
+          headers : {
+            'Authorization' : `${token}`
+          },
+        }).then(res => res.json()).then(company => {
+
+          setCompany(company)
+          
+        });
+          
+      });
+    }
+
+    return () => mounted = false
+
   }, [token])
   
   const logout = () => {
@@ -55,7 +68,7 @@ export default function Dashboard(){
         last_logout : date
       })
     }).then(res => res.json()).then(data => {
-      console.log(data)
+  
       if(data){
         localStorage.clear();
         setLoggedIn(false);
@@ -77,7 +90,7 @@ export default function Dashboard(){
     <div>
     <Router>
       <companyContext.Provider value={company}>
-        <userContext.Provider value={user}> 
+        <userContext.Provider value={user}>
         <Topbar logged={loggedIn} logout={logout} />
         <Sidebar classes='sidenav' elevated={user} />
         <div className='main'>

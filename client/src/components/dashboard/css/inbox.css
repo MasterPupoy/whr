@@ -20,22 +20,22 @@
   box-shadow: 3px 1px 8px 0px rgba(33, 34, 44, 0.37);
   border-radius: 1px;
   font-family: "Roboto", sans-serif;
+}
+
+.list_container_button {
+  display: block;
+  margin: 20px 10px 10px 10px;
+  padding: 5px 0px 5px 30px;
+  width: 260px;
+  color: #fff;
+  background: #f3904f;
   text-align: left;
-}
-
-.list-container ul {
-  list-style-type: none;
-  margin: 0;
-}
-
-.list-container li {
-  margin: 20px 10px 10px 0px;
-  padding: 5px 0px 5px 5px;
   border-radius: 3px;
+  border: none;
 }
 
-.list-container li:hover {
-  background: #d6d6d6;
+.list_container_button:hover {
+  background: #5885af;
   cursor: pointer;
 }
 
@@ -54,10 +54,14 @@
 .filler {
   color: #bbbb;
   text-align: center;
-  padding: 15% 0px 0px 0px;
+  padding: 20% 0px 0px 0px;
   font-size: 20px;
 }
 
 .icon {
   font-size: 70px;
+}
+
+.compose {
+  text-align: right;
 }

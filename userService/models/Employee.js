@@ -36,6 +36,10 @@ const employeeSchema = new Schema({
   phone_numbers: [{
     type: Number
   }],
+  remote: {
+    type: Boolean,
+    default: false
+  },
   designation: {
     type: String
   },

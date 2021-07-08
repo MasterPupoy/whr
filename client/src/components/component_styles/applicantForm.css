@@ -1,0 +1,33 @@
+.candidate_info p {
+  margin: 0;
+  font-size: 15px;
+  background: #fff;
+}
+
+.candidate_small {
+  font-size: 17px;
+}
+
+.pane_properties {
+  background: #fff;
+}
+
+.set_interview_button {
+  padding: 5px 10px 5px 10px;
+  border-radius: 1px;
+  border: 1px solid #f3904f;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  background: #f3904f;
+  color: #fff;
+}
+
+.set_cancel_button {
+  padding: 5px 10px 5px 10px;
+  border-radius: 1px;
+  border: 1px solid #2a1b3d;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+  background-color: #2a1b3d;
+  color: #fff;
+}

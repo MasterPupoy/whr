@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon ./index.js"
+    "dev": "nodemon ./index.js"
   },
   "author": "Aryan Delloson",
   "license": "ISC",
@@ -16,6 +16,7 @@
     "mongoose": "^5.13.0",
     "nodemailer": "^6.6.2",
     "nodemon": "^2.0.8",
+    "socket.io": "^4.1.2",
     "uuid": "^8.3.2"
   }
 }

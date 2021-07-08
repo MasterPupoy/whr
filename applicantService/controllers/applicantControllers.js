@@ -60,9 +60,13 @@ module.exports.getAllApplicants = (params) => {
 
 // update applicant status 
 module.exports.updateApplicantStatus = (params) => {
+  
   return Applicant.findByIdAndUpdate(params.applicant_id, {
     $set : {
-      status : Number(params.status)
+      application_status : Number(params.status),
+      for_interview : true,
+      interview_date : params.date,
+      reviewed : true
     }
   }).then((applicant, err) => (err) ? console.log(err) : true);
 };
@@ -72,7 +76,8 @@ module.exports.hire = (params) => {
   return Applicant.findByIdAndUpdate(params.applicant_id, { 
     $set : { 
       hired: true,
-      hired_on: new Date().toString()      
+      reviewed: true,
+      hired_on: new Date().toString()   
     }}).then((applicant, err) => {
       if(err){
         console.log(err);
@@ -82,7 +87,7 @@ module.exports.hire = (params) => {
           if(err){
             console.log(err)
           }
-
+          
           let newRandomPassword = getRandomIntPassword().toString(); 
 
           let newEmployee = new Employee({
@@ -91,14 +96,13 @@ module.exports.hire = (params) => {
             first_name: applicant.first_name,
             last_name: applicant.last_name,
             phone_numbers : applicant.phone_numbers,
-            designation: applicant.job_id.designation,
+            designation: applicant.job_id.title,
             status: "active",
             official_email: applicant.official_email,
             password: bcrypt.hashSync(newRandomPassword, 10),
-            team_id: params.team_id,
-            department_id: params.department_id,
-            shift_id: params.shift_id,
-            joining_date: params.joining_date
+            joining_date: params.joining_date,
+            remote: params.remote,
+            compensation: params.compensation
           });
 
           return newEmployee.save().then((employee, err) => {
@@ -120,7 +124,8 @@ module.exports.hire = (params) => {
 module.exports.reject = (params) => {
   return Applicant.findByIdAndUpdate(params.id, {
     $set : {
-      rejected: true
+      rejected: true,
+      reviewed: true
     }
   }).then((applicant, err) => (err) ? console.log(err) : true );
 };

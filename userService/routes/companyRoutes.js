@@ -28,6 +28,7 @@ router.get('/:company_id', auth.verify, (req, res) => {
   let params = {
     company_id : req.params.company_id
   }
+
   try{
     companyController.getCompany(params).then(company => res.send(company));
   }catch(error){

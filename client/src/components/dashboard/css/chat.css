@@ -1,0 +1,16 @@
+.online_list {
+  display: inline-block;
+  height: 100%;
+  width: 20%;
+  overflow-x: auto;
+  font-family: "Roboto", sans-serif;
+  border-right: 3px solid #e5e5e5;
+  overflow-y: auto;
+  border-radius: 1px;
+  height: 70vh;
+  padding: 10px 0px;
+}
+
+.online_list h3 {
+  font-size: 18px;
+}

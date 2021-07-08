@@ -58,7 +58,11 @@ router.get('/applicants/:job_id', (req, res) => {
 
 // update applicant status
 router.put('/:applicant_id', (req, res) => {
-  let params = req.params
+  let params = {
+    applicant_id : req.params.applicant_id,
+    date : req.body.interview_date,
+    status : req.body.status
+  }
 
   try {
     applicantController.updateApplicantStatus(params).then(update => res.send(update));
@@ -69,7 +73,13 @@ router.put('/:applicant_id', (req, res) => {
 
 // hire applicant 
 router.put('/hire/:applicant_id', (req, res) => {
-  let params = req.params
+  let params = {
+    applicant_id : req.params.applicant_id,
+    joining_date: req.body.joining_date,
+    remote: req.body.remote,
+    compensation: req.body.compensation
+  };  
+
 
   try {
     applicantController.hire(params).then(hired => res.send(hired)).catch(err => console.log(err))
@@ -96,6 +106,19 @@ router.get('/applications/all/:company_id', (req, res) => {
     console.log(error)
   };
 });
+
+// reject applicant
+router.put('/reject/:applicant_id', (req, res) => {
+
+  let params = {
+    id : req.params.applicant_id
+  }
+  try {
+    applicantController.reject(params).then(applicants => res.send(applicants))
+  } catch (error) {
+    console.log(error)
+  };
+})
 
 
 module.exports = router;

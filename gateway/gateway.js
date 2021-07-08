@@ -14,7 +14,7 @@ const PORT = 5000;
 
 gateway.use('/apply', APPLICANT_SERVICE);
 gateway.use('/whr', USER_SERVICE);
-gateway.use('/email', auth.verify, EMAIL_SERVICE);
+gateway.use('/email', EMAIL_SERVICE);
 gateway.use('/file', FILE_SERVICE);
 
 gateway.listen(PORT, () => {

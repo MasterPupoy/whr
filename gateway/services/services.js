@@ -10,7 +10,6 @@ const EMAIL_SERVICE_URL = 'http://localhost:5004';
 
 const APPLICANT_SERVICE = createProxyMiddleware({
   target: APPLICANT_SERVICE_URL,
-  changeOrigin: true,
   pathRewrite: {
     '^/apply': '',
   },
@@ -18,7 +17,6 @@ const APPLICANT_SERVICE = createProxyMiddleware({
 
 const USER_SERVICE = createProxyMiddleware({
   target: USER_SERVICE_URL,
-  changeOrigin: true,
   pathRewrite: {
     '^/whr': '',
   },
@@ -26,7 +24,6 @@ const USER_SERVICE = createProxyMiddleware({
 
 const FILE_SERVICE = createProxyMiddleware({
   target: FILE_SERVICE_URL,
-  changeOrigin: true,
   pathRewrite: {
     '^/file': '',
   },
@@ -34,7 +31,7 @@ const FILE_SERVICE = createProxyMiddleware({
 
 const EMAIL_SERVICE = createProxyMiddleware({
   target: EMAIL_SERVICE_URL,
-  changeOrigin: true,
+  ws: true,
   pathRewrite: {
     '^/email': '',
   },

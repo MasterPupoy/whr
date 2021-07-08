@@ -36,6 +36,17 @@ const applicantSchema = new Schema({
   rejected: {
     type: Boolean
   },
+  for_interview : {
+    type: Boolean, 
+    default : false
+  },
+  reviewed : {
+    type: Boolean,
+    default: false
+  },
+  interview_date : {
+    type: String
+  },
   hired: {
     type: Boolean
   },

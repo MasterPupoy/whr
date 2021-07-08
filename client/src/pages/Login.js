@@ -76,13 +76,18 @@ export default function Login(){
       body: JSON.stringify({
         last_login : new Date().toString()
       })
-    }).then(res => res.json()).then(data => {
+    }).then(res =>{
 
+     
+      return res.json()
+    }).then(data => {
+
+      console.log(data)
       return data
     });
     }).catch(err => console.log(err))
-  
-    if(loginResponse === null){
+    
+    if(!loginResponse){
       setError('Something went wrong! Error code : 500')
       return setShowError(true);
     }
