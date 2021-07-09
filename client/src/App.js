@@ -16,7 +16,7 @@ import Apply from './pages/Apply';
 function App() {
 
   return(
-    <Router>
+    <Router basename='/'>
       <Switch>  
         <Route exact path="/" component={Careers} />
         <Route exact path="/register" component={Register} />
