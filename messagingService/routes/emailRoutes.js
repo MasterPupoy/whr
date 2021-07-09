@@ -31,7 +31,6 @@ router.post('/send', (req, res) => {
     unread: true,
   };
 
-  console.log(params)
   try {
     mailController.sendMessage(params).then(mail => res.send(mail));
   }catch(error){

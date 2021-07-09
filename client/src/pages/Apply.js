@@ -156,13 +156,11 @@ export default function ApplicationModal(props){
                       </Form.Control>
                   </Form.Group>
 
+                </Row>
                   <Form.Group  controlId="phone_number">
                     <Form.Label>Phone Number</Form.Label>
-                    <Form.Control type="text" placeholder="Select One" ref={phone_number} required/>
+                    <Form.Control type="text" placeholder="Mobile number" ref={phone_number} required/>
                   </Form.Group>
-
-
-                </Row>
 
                 <Row>
 
@@ -181,14 +179,14 @@ export default function ApplicationModal(props){
                     <Form.Control type="text" placeholder="province" ref={province} required/>
                   </Form.Group>
 
+                  <Form.Group as={Col} controlId="zip_code">
+                    <Form.Label>Zip Code</Form.Label>
+                    <Form.Control type="text" placeholder="Zip Code" ref={zip_code} required/>
+                  </Form.Group>
                 </Row>
                  
-                <Form.Group controlId="zip_code">
-                  <Form.Label>Zip Code</Form.Label>
-                  <Form.Control type="text" placeholder="Zip Code" ref={zip_code} required/>
-                </Form.Group>
 
-                <Form.Group as={Col} controlId="street">
+                <Form.Group controlId="street">
                   <Form.Label>Expected salary</Form.Label>
                   <Form.Control type="text" placeholder="Compensation" ref={expected_compensation} />
                 </Form.Group>
@@ -200,11 +198,11 @@ export default function ApplicationModal(props){
 
                 <Form.Group controlId="formFile" style={{paddingTop : '30px'}} className="mb-3">
                   <Form.Label>Upload Resume</Form.Label>  
-                  <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
+                  <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} disabled/>
                 </Form.Group>
 
                 <Button type='submit' variant='success'>Apply</Button>
-                <Button variant='danger'>Cancel</Button>
+                <Button style={{marginLeft : '10px'}} variant='danger'>Cancel</Button>
               </Form>
 
             </div>
