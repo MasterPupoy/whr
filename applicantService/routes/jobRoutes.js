@@ -15,7 +15,6 @@ router.post('/createJob', (req, res) => {
     posted_by: req.body.posted_by
   };
 
-  console.log(params);
   try{
     jobController.createJob(params).then(job => res.send(job));
 

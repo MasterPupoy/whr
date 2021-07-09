@@ -7,8 +7,13 @@ p {
 }
 
 .banner {
+  padding-top: 50px;
   text-align: right;
-  margin-left: 100px;
+  margin-right: 100px;
+  width: 600px;
+  position: absolute;
+  z-index: 0;
+  left: 45%;
 }
 
 .row_careers {
@@ -62,7 +67,15 @@ p {
 }
 
 .banner_qoute {
-  margin-top: 60px;
-  font-family: "Merienda", cursive;
-  font-size: 30px;
+  font-family: "Roboto", sans-serif;
+  font-size: 20px;
+  width: 400px;
+  position: absolute;
+  z-index: 1;
+  left: 13%;
+  top: 30%;
+}
+
+.layered {
+  height: 100vh;
 }

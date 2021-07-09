@@ -26,7 +26,8 @@ emailService.use(express.json());
 
 mongoose.connect(`${DB_URI}`, {
   useUnifiedTopology : true,
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useFindAndModify: false
 });
 
 mongoose.connection.once('open', () => {
