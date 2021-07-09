@@ -100,7 +100,7 @@ export default function Login(){
 
   const googleAuthentication = async (response) => {
     setLoading(true);
-    console.log(response.Ys.It, response.Ys.hU)
+    
 
     await fetch(`${GATEWAY_URL}/whr/employee/googleLogin`, {
       method: 'POST',
