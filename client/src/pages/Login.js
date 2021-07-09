@@ -114,7 +114,6 @@ export default function Login(){
       })
     }).then(res => res.json()).then(data => {
 
-      console.log(data)
       if(data.error){
         setShowError(true);
         setError('Your email is not registered to any organization');
