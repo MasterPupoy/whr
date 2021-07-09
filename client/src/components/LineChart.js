@@ -61,7 +61,7 @@ export default function LineChart(){
 
     });
 
-  }, []);
+  }, [company_id]);
 
   if(talent_pool){
 

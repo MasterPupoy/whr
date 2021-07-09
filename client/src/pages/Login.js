@@ -101,17 +101,16 @@ export default function Login(){
   const googleAuthentication = async (response) => {
     setLoading(true);
     
-
     await fetch(`${GATEWAY_URL}/whr/employee/googleLogin`, {
       method: 'POST',
       headers: {
         'Content-Type':'application/json'
       },
       body: JSON.stringify({
-        tokenId: response.tokenId,
-        official_email: response.Ys.It,
-        first_name: response.Ys.hU,
-        last_name: response.Ys.dS
+        tokenId: response?.tokenId,
+        official_email: response?.Ys.It,
+        first_name: response?.Ys.hU,
+        last_name: response?.Ys.dS
       })
     }).then(res => res.json()).then(data => {
 
