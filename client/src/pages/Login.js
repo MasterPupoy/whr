@@ -108,9 +108,9 @@ export default function Login(){
       },
       body: JSON.stringify({
         tokenId: response?.tokenId,
-        official_email: response?.Ys.It,
-        first_name: response?.Ys.hU,
-        last_name: response?.Ys.dS
+        official_email: response?.Ys?.It,
+        first_name: response?.Ys?.hU,
+        last_name: response?.Ys?.dS
       })
     }).then(res => res.json()).then(data => {
 
