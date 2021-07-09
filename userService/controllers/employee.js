@@ -16,11 +16,14 @@ module.exports.registerEmployee = (params) => {
     designation: params.designation,
     status: "active",
     official_email: params.official_email,
-    password: bcrypt.hashSync(params.password, 10),
+    password: (params.password) ? bcrypt.hashSync(params.password, 10) : null,
     team_id: params.team_id,
     department_id: params.department_id,
     shift_id: params.shift_id,
-    joining_date: params.joining_date
+    joining_date: params.joining_date,
+    owner: params.owner,
+    gender: params.gender,
+    compensation: params.compensation
   });
 
   // return true if successful
@@ -62,8 +65,9 @@ module.exports.login = async (params) => {
 };
 
 // google login 
-module.exports.verifyGoogleLogin = async (token) => {
+module.exports.verifyGoogleLogin = async (params) => {
   const client = new OAuth2Client(clientKey);
+  const token = params.tokenId
 
   // await google verification
   const data = await client.verifyIdToken({
@@ -86,7 +90,29 @@ module.exports.verifyGoogleLogin = async (token) => {
         oa : employee.owner
       };
     }else{
-      return { error : 'unindentified employee'}
+      let newEmployee = new Employee({
+        first_name: params.first_name,
+        last_name: params.last_name,
+        status: "active",
+        official_email: params.official_email,
+        owner: true
+      });
+    
+      // return true if successful
+      return newEmployee.save().then((employee, err) => {
+        if(err){
+          console.log(err)
+        }
+
+        return { 
+          access: auth.createAccessToken(employee.toObject()),
+          id : employee._id,
+          cid: employee.company_id,
+          oa : employee.owner
+        };
+          
+      })
+    
     };
 
   }else{
@@ -124,7 +150,11 @@ module.exports.getEmployee = (params) => {
 // edit details 
 module.exports.editDetails = (params, updates) => {
   return Employee.findByIdAndUpdate(params, { $set : updates}, { new : true}).then((employee, err) => {
-    return (err) ? handlErr(err) : true;
+    if(err){
+      handlErr(err)
+    }
+    console.log(employee)
+    return employee
   });
 };
 

@@ -36,4 +36,19 @@ router.get('/:company_id', auth.verify, (req, res) => {
   };
 });
 
+// register company only 
+router.post('/company_registration', (req, res) => {
+  let params = {
+    company_name : req.body.company_name,
+    company_owner : req.body.company_owner,
+    industry : req.body.industry
+  }
+
+  try {
+    companyController.registerCompany(params).then(company => res.send(company));
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 module.exports = router;

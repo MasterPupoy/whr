@@ -5,6 +5,7 @@ import CustomButton from "../components/CustomButton";
 import Alert from '../components/Alert';
 import GoogleLoginButton from "../components/GoogleLogin";
 import { GATEWAY_URL } from "../helper";
+import Swal from 'sweetalert2';
 import '../css/register.css'
 
 export default function Register(){
@@ -30,7 +31,7 @@ export default function Register(){
     setLoading(true);
 
     if(!(password.current.value === verify_password.current.value)){
-      setError('Please confirm your password');
+      setError('Your passwords dont match');
       setShowError(true);
      return setLoading(false);
     }
@@ -61,6 +62,12 @@ export default function Register(){
     }).then(res => res.json()).then(data => {
       if(data === true){
         setSuccess(true)
+        Swal.fire({
+            title: 'Registered!',
+            text: 'Please login',
+            icon: 'success',
+            confirmButtonText: 'Got It'
+        });
       };
     });
   };

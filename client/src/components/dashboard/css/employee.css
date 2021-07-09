@@ -24,10 +24,12 @@
 
 .employee_inner_container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .employee_card {
   position: relative;
+  padding: 10px 10px 0px 20px;
   border: 1px solid #e5e5e5;
   box-shadow: 0.5px 0.5px 1px 0px rgba(33, 34, 44, 0.37);
   border-radius: 2px;
@@ -46,7 +48,7 @@
   border-radius: 1px;
   margin: 10px;
   width: 300px;
-  min-height: 200px;
+  min-height: 300px;
 }
 
 .card_overlay {
@@ -54,7 +56,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: #008cba;
+  background-color: #3b4371;
   overflow: hidden;
   width: 100%;
   height: 0;
@@ -74,4 +76,32 @@
 
   top: 15%;
   left: 5%;
+}
+
+.add_modal_Style {
+  position: relative;
+  overflow-y: scroll;
+  display: block;
+  width: 100%;
+  height: 700px;
+  padding: 30px 150px 70px 50px;
+  margin: 0px 0px 0px 0px;
+  background: white;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border-radius: 2px;
+  border: 1px solid rgba(153, 146, 146);
+  font-family: "Roboto", sans-serif;
+}
+
+.add_modal_Style label {
+  font-size: 16px;
+}
+
+.add_modal_Style button {
+  margin: 10px 5px 10px;
+}
+
+.add_modal_Style p {
+  padding: 5px;
+  font-size: 12px;
 }

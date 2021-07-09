@@ -4,13 +4,14 @@ import { BsPencilSquare } from 'react-icons/bs';
 import { GATEWAY_URL } from '../helper';
 import Swal from 'sweetalert2';
 
-export default function Compose({ onClick }){
+export default function Compose({ onClick, recipient, subj, recipientId }){
+ 
   const [employees, setEmployees] = useState();
   const cid = localStorage.getItem('cid');
   const id = localStorage.getItem('id');
-  const to = useRef(null);
-  const subject = useRef(null);
-  const content = useRef(null);
+  const to = useRef((recipient) ? recipient : null);
+  const subject = useRef();
+  const content = useRef();
 
   useEffect(() => {
     fetch(`${GATEWAY_URL}/whr/employee/employees`, {
@@ -23,11 +24,11 @@ export default function Compose({ onClick }){
         company_id : cid
       })
     }).then(res => res.json()).then(data => setEmployees(data));
-  }, [])
+  }, [cid])
+
 
   const sendMessage = (e) => {
     e.preventDefault();
-    console.log(to.current.value, subject.current.value, content.current.value);
     
     fetch(`${GATEWAY_URL}/email/delivery/send`, {
       method : 'POST',
@@ -36,19 +37,34 @@ export default function Compose({ onClick }){
       },
       body : JSON.stringify({
         from: id,
-        to: to.current.value,
+        to: (recipientId) ? recipientId : to.current.value,
         subject: subject.current.value,
-        content: content.current.value
-      })
+        content: content.current.value,
+        date: new Date().toString()
+      }),
     }).then(res => res.json()).then(data => {
       if(data){
         onClick();
-        Swal.fire({
-          icon: 'success',
-          title: 'Message sent!',
+        to.current.value = null
+        subject.current.value = null
+        content.current.value = null
+        
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
           showConfirmButton: false,
-          timer: 1500
-        });
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'Message Sent'
+        })
       };
     })
 
@@ -59,20 +75,35 @@ export default function Compose({ onClick }){
         <h3><BsPencilSquare /> Compose Message</h3>
         <Form.Group controlId="to">
           <Form.Label>To :</Form.Label>
-          <Form.Control as="select" ref={to}>
-            {employees?.map((employee, i) => {
-              return (
-                <option key={i} value={employee._id}>
-                  {employee.official_email}
-                </option>
-              )
-            })}
-          </Form.Control>
+          {(recipient) ? 
+        
+              <Form.Control type="text" value={recipient} readOnly/>
+            :
+              <Form.Control as="select" 
+                ref={to}
+              >
+                <option>-- Select Recipient --</option>
+                {employees?.map((employee, i) => {
+                  return (
+                    <option 
+                      key={i} 
+                      value={employee._id}
+                    >
+                      {employee.designation} - {employee.official_email} 
+                    </option>
+                  )
+                })}
+              </Form.Control>
+          }
         </Form.Group>
 
         <Form.Group controlId="subject">
           <Form.Label>Subject:</Form.Label>
-          <Form.Control type="text" placeholder="Subject" ref={subject}/>
+          {(subj) ? 
+              <Form.Control type="text" value={subj} ref={subject} readOnly/>
+            :
+              <Form.Control type="text" placeholder="Subject" ref={subject}/>
+          }
         </Form.Group>
   
         <Form.Group controlId="exampleForm.ControlTextarea1">
@@ -81,6 +112,7 @@ export default function Compose({ onClick }){
         </Form.Group>
 
         <Button type='submit'>Send</Button>
+        <Button onClick={onClick}>Cancel</Button>
   </Form>
   )
 }

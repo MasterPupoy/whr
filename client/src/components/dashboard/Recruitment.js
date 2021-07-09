@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Tabs, Tab, Card, Spinner, Table, Button } from 'react-bootstrap';
 import Title from '../Title';
-import { RiBriefcase2Fill, RiNurseFill } from 'react-icons/ri';
+import { RiBriefcase2Fill } from 'react-icons/ri';
 import { GiOfficeChair } from 'react-icons/gi';
 import { WiWindy, WiMoonAltFull } from 'react-icons/wi';
 import { GATEWAY_URL } from '../../helper';
@@ -25,6 +25,7 @@ export default function Recruitment(){
   const [showHire, setHire] = useState(false)
   const [selected_candidate, setSelectedCandidate] = useState();
   const company = useContext(companyContext);
+  const company_id = localStorage.getItem('cid');
   
   console.log(company)
   useEffect(() => {
@@ -43,7 +44,7 @@ export default function Recruitment(){
     
     if(key === 'candidates'){
       
-      fetch(`${GATEWAY_URL}/apply/openings/applications/${company._id}`, {
+      fetch(`${GATEWAY_URL}/apply/openings/applications/${company_id}`, {
         method: 'GET'
       }).then(res => res.json()).then(data => {
         setCandidates(data);
@@ -53,7 +54,7 @@ export default function Recruitment(){
     
     if(key === 'talent_pool'){
       
-      fetch(`${GATEWAY_URL}/apply/openings/applications/all/${company._id}`, {
+      fetch(`${GATEWAY_URL}/apply/openings/applications/all/${company_id}`, {
         method: 'GET'
       }).then(res => res.json()).then(data => {
         setTalentPool(data);
@@ -61,7 +62,7 @@ export default function Recruitment(){
     };
     
     
-  }, [key, company._id]);
+  }, [key, company_id]);
   
   const setInterview = (candidate) => {
     
@@ -153,6 +154,7 @@ export default function Recruitment(){
                                   <br />
                                   <span>Applications</span>
                                 </Card.Text>
+                                <p className='posted_by'>Posted by : {jobs.posted_by}</p>
                                 <Button className='interact_button' variant='warning'>Close Position</Button>
                                 <Button className='interact_button' variant='dark'>See Details</Button>
                               </Card.Body>
@@ -289,7 +291,6 @@ export default function Recruitment(){
                             </th>
                             <th>Expected Compensation</th>
                             <th>Phone Number</th>
-                            <th>Rejected</th>
                             <th></th>
                           </tr>
                         </thead>
@@ -306,11 +307,10 @@ export default function Recruitment(){
                                       textAlign : 'center'
                                     }}
                                   >
-                                    {candidate.application_status}
+                                    {(candidate.rejected) ? 'Rejected' : 'For Review'}
                                   </td>
                                   <td>{candidate.expected_compensation}</td>
                                   <td>{candidate.phone_numbers}</td>
-                                  <td>{(candidate.rejected) ? 'YES' : 'NO'}</td>
                                   <td>
                                     <button 
                                     className='interview_button'

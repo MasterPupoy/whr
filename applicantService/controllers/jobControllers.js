@@ -12,7 +12,8 @@ module.exports.createJob = (params) => {
     experience: params.experience,
     type: params.type,
     setup: params.setup, 
-    remote: params.remote
+    remote: params.remote,
+    posted_by: params.posted_by
   });
 
   return newJob.save().then((job, err) => {

@@ -22,6 +22,8 @@ mongoose.connect(`${DB_URI}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
+}).then(() => {
+  console.log(`MongoDB connection established`)
 }).catch(err => console.log(err));
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB atlas'));

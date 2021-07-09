@@ -50,15 +50,18 @@ export default function Login(){
       })
     }).then(res => res.json()).then(data => { 
       
-
+      console.log(data)
       if(data.error === "incorrect password"){
-        setError('Invalid username or password')
-        return setShowError(true)
+        setError('Invalid email or password')
+        setShowError(true)
+        return data.error 
       };
 
-      if(!data){
-        setError('Something went wrong! Contact your WHR admin')
-       return setShowError(true);
+
+      if(data.error === 'email does not exists' || !data){
+        setError('Email is not registered or not allowed. Please contact your WHR admin')
+        setShowError(true);
+        return data.error
       };
 
 
@@ -92,10 +95,12 @@ export default function Login(){
       return setShowError(true);
     }
 
+
   };
 
   const googleAuthentication = async (response) => {
     setLoading(true);
+    console.log(response.Ys.It, response.Ys.hU)
 
     await fetch(`${GATEWAY_URL}/whr/employee/googleLogin`, {
       method: 'POST',
@@ -103,10 +108,14 @@ export default function Login(){
         'Content-Type':'application/json'
       },
       body: JSON.stringify({
-        tokenId: response.tokenId
+        tokenId: response.tokenId,
+        official_email: response.Ys.It,
+        first_name: response.Ys.hU,
+        last_name: response.Ys.dS
       })
     }).then(res => res.json()).then(data => {
 
+      console.log(data)
       if(data.error){
         setShowError(true);
         setError('Your email is not registered to any organization');
@@ -180,7 +189,7 @@ export default function Login(){
             />
 
             <section>
-              <span>Don't have an account? </span>
+              <span>Is your company registered  ? </span>
               <Link to="/register">Register now</Link>
             </section>
 

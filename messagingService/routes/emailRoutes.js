@@ -27,6 +27,7 @@ router.post('/send', (req, res) => {
     subject: req.body.subject,
     type: req.body.type,
     content: req.body.content,
+    date: req.body.date,
     unread: true,
   };
 

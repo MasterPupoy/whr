@@ -1,5 +1,4 @@
-import React, { useRef, useContext, useState } from 'react';
-import { Redirect } from 'react-router';
+import React, { useRef, useContext } from 'react';
 import { Form, Col, Row, Button } from 'react-bootstrap';
 import { RiDoorOpenFill } from 'react-icons/ri';
 import userContext from '../contexts/userContext';
@@ -14,7 +13,7 @@ export default function JobForm({ onClick }){
   const description = useRef(null);
 
   const user = useContext(userContext); 
-  const [success, setSuccess] = useState(false)
+
 
   const postVacancy = async (e) => {
     e.preventDefault();
@@ -48,6 +47,7 @@ export default function JobForm({ onClick }){
         type: type.current.value.trim(), 
         salary: `P ${salary.current.value.trim()}`, 
         description: description.current.value.trim(),
+        posted_by:`${user?.first_name} ${user?.last_name}`,
         remote : (setup.current.value.trim().toLowerCase() === 'remote') ? true : false 
       })
     }).then(res => res.json()).then(data => {
@@ -57,10 +57,6 @@ export default function JobForm({ onClick }){
         }
       }
     );
-  };
-
-  if(success){
-    return <Redirect to='/dashboard/recruitment' />
   };
 
   return (
@@ -102,7 +98,7 @@ export default function JobForm({ onClick }){
 
         <Form.Group as={Col} controlId="salary">
           <Form.Label>Salary</Form.Label>
-        <Form.Control type="text" placeholder="Compensation" ref={salary} required/>
+        <Form.Control type="text" placeholder="Compensation" ref={salary} />
         </Form.Group>
 
       </Row>

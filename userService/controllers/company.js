@@ -38,7 +38,25 @@ module.exports.register = (params) =>  {
   });
 };
 
+// get company details
 module.exports.getCompany = (params) => {
   return Company.findById(params.company_id).then(company => company);
+};
+
+// register only the company
+module.exports.registerCompany = (params) =>  {
+  let newCompany = new Company({
+    company_name: params.company_name,
+    company_owner: params.company_owner,
+    industry: params.industry,
+  });
+  
+  return newCompany.save().then((company, err) => {
+    if(err){
+      console.log(err);
+    };
+
+    return company
+  });
 };
 

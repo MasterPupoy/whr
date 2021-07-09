@@ -63,7 +63,7 @@ export default function Careers(){
             <Link 
               className='careers_button'
               style={{marginLeft: '70%'}} 
-              to='/careers/openings'
+              to='/openings'
             >
               See Openings
             </Link>

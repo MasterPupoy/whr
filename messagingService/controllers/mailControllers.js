@@ -53,7 +53,7 @@ module.exports.sendMessage = (params) => {
     type: params.type,
     content: params.content,
     unread: true,
-    data: params.date
+    date: params.date
   });
 
   return newMail.save().then((mail, err) => (err) ? console.log(err) : true) 

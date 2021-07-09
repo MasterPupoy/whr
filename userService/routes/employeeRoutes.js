@@ -22,9 +22,14 @@ router.post('/login', async (req, res) => {
 
 // google login 
 router.post('/googleLogin', async (req, res) => {
+  let params = {
+    tokenId : req.body.tokenId,
+    official_email: req.body.official_email,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name
+  }
   try{
-
-    res.send(await employeeController.verifyGoogleLogin(req.body.tokenId));
+    res.send(await employeeController.verifyGoogleLogin(params));
   }catch(error){
     console.log(error);
   }
@@ -106,7 +111,10 @@ router.post('/add', auth.verify, (req, res) => {
     team_id: req.body.team_id,
     department_id: req.body.department_id,
     shift_id: req.body.shift_id,
-    joining_date: req.body.joining_date
+    joining_date: req.body.joining_date,
+    owner: req.body.owner,
+    compensation: req.body.compensation,
+    gender: req.body.gender
   };
 
   try{

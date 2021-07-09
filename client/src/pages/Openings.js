@@ -61,17 +61,23 @@ export default function Careers(){
           </Col>
         </Row>
         <hr />
-        {(jobs) ? 
+        {(jobs.length > 0) ? 
           <div className='openings_container'>
-            {(jobs.length > 0) ? 
+            {(jobs) ? 
               <div>{
                 jobs.map((job, i) => {
+                  let post_date = new Date(job.createdAt).toString()
                   return (
                   <Row key={i} className='row_openings'>
                       <Col>
                         <h3>{job.title}</h3>
                         <p>{job.company_id.company_name}</p>
                         <p>{job.company_id.industry} industry</p>
+                        <p 
+                          style={{fontSize : '15px'}}
+                        >
+                          {post_date.slice(0,16)}
+                        </p>
                       </Col>
                       <Col>
                         <h5>{job.experience}</h5>
@@ -98,9 +104,9 @@ export default function Careers(){
             }
           </div>
           :
-          <div>
-            <GiConqueror /><br />
-            <h3>Hang in there! Opportunities are coming your way.</h3>
+          <div className='filler_opening'>
+            <GiConqueror style={{fontSize : '100px'}}/><br />
+            <h3>No posting yet. <br />Hang in there! Opportunities are coming your way.</h3>
           </div>
         }
 

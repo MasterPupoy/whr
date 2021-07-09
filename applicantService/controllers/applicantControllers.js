@@ -97,6 +97,7 @@ module.exports.hire = (params) => {
             last_name: applicant.last_name,
             phone_numbers : applicant.phone_numbers,
             designation: applicant.job_id.title,
+            gender: applicant.gender,
             status: "active",
             official_email: applicant.official_email,
             password: bcrypt.hashSync(newRandomPassword, 10),

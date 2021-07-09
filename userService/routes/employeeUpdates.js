@@ -3,6 +3,10 @@ module.exports.includeUpdates = (req, res, next) => {
   let data = req.body;
   let updates = {}
 
+  if(data.company_id){
+    updates.company_id = data.company_id
+  };
+
   if(data.access_level){
     updates.access_level = data.access_level
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Title from '../Title';
 import { GoMailRead } from 'react-icons/go';
 import { RiInboxUnarchiveLine } from 'react-icons/ri'
@@ -7,19 +7,16 @@ import SlideModal from '../SlideModal';
 import WorkInbox from './WorkInbox';
 import Chat from './Chat';
 import Sent from './Sent';
-import { socket } from '../../helper';
-import userContext from '../../contexts/userContext';
-import { GATEWAY_URL } from '../../helper'; 
 import Compose from '../Compose';
 import CustomButton from '../CustomButton';
+//import { socket } from '../../helper';
+//import { GATEWAY_URL } from '../../helper'; 
 
 export default function Inbox(){
   const [open, setOpen] = useState(null);
-  const token = localStorage.getItem('act');
-  const [online, setOnline] = useState([]);
+  //const token = localStorage.getItem('act');
+  //const [online, setOnline] = useState([]);
   const [show, setShow] = useState(false);
-
-  const user = useContext(userContext);
  
   const Selection = () => {
     switch(open){
@@ -28,7 +25,7 @@ export default function Inbox(){
       case('sent'):
       return <Sent />
       case('chat'):
-      return <Chat online={online} />
+      return <Chat  />
       default:
         return null
       }

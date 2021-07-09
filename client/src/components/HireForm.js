@@ -21,7 +21,7 @@ export default function HireForm({ candidate, onClick }){
       body : JSON.stringify({
         joining_date: joining_date.current.value,
         remote: candidate.job_id.remote,
-        compensation: compensation.current.value
+        compensation: compensation.current.value.replace(',', '')
       })
     }).then(res => res.json()).then(data => {
 

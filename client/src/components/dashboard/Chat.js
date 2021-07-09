@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { ListGroup } from 'react-bootstrap';
 import companyContext from '../../contexts/companyContext';
 import './css/chat.css';
-import { Tab, Row, Nav, Col } from 'react-bootstrap';
-import { socket } from '../../helper';
-import { GATEWAY_URL } from '../../helper'; 
+//import { Tab, Row, Nav, Col } from 'react-bootstrap';
+//import { socket } from '../../helper';
+//import { GATEWAY_URL } from '../../helper'; 
 
 
 export default function Chat({ online }){
   const company = useContext(companyContext);
-  const [reconnect, setReconnect] = useState(true);
-  const token = localStorage.getItem('act');
+  //const [reconnect, setReconnect] = useState(true);
+  //const token = localStorage.getItem('act');
   
 
   //useEffect(() => {

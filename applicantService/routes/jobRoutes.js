@@ -3,8 +3,6 @@ const jobController = require('../controllers/jobControllers');
 
 // create job route
 router.post('/createJob', (req, res) => {
-
-  console.log(req.body)
   let params = {
     company_id: req.body.company_id,
     title: req.body.title,
@@ -13,7 +11,8 @@ router.post('/createJob', (req, res) => {
     applicant_access_type: req.body.applicant_access_type,
     experience: req.body.experience,
     type: req.body.type,
-    remote: req.body.remote
+    remote: req.body.remote,
+    posted_by: req.body.posted_by
   };
 
   console.log(params);

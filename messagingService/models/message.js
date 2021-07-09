@@ -25,7 +25,7 @@ const messageSchema = new Schema({
   },
   date: {
     type: String,
-    default: Date.now()
+
   }
 }, {timestamps : true})
 

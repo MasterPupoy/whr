@@ -32,7 +32,6 @@ export default function ApplicationModal(props){
 
   }, [id]);
 
-  console.log(job)
 
   const apply = async (e) => {
     e.preventDefault()
@@ -63,14 +62,18 @@ export default function ApplicationModal(props){
         message: message.current.value.trim(),
         })
       }).then(res => res.json()).then(applicant => {
-       
+
+       if(file){
         let formData = new FormData()
         formData.append('file', file);
           
-        fetch(`${GATEWAY_URL}/file/upload/${applicant._id}`, {
+        return fetch(`${GATEWAY_URL}/file/upload/${applicant._id}`, {
           method: 'POST',
           body : formData
-        }).then(res => res.text()).then(data => (data) ? setSuccess(true) : {});
+        }).then(res => res.text()).then(data => (data) ? setSuccess(true) : null);
+       }
+        
+       return setSuccess(true)
       });
   };
 
@@ -133,7 +136,7 @@ export default function ApplicationModal(props){
 
                 <Form.Group controlId="official_email">
                   <Form.Label>Email Address</Form.Label>
-                  <Form.Control type="text" placeholder="Lastname" ref={official_email} required/>
+                  <Form.Control type="text" placeholder="Email Address" ref={official_email} required/>
                 </Form.Group>
 
                 <Form.Group  controlId="date_of_birth">

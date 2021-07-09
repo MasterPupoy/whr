@@ -18,7 +18,7 @@ export default function Metrics(){
      <Title icon={<GiAbstract050 />} title='My Dashboard' />
      <div className='table-head'>
       <h5>Hey there {elevated?.first_name}!</h5>
-      <span className='time'> Your last login was on {elevated?.last_login}</span>
+      <span className='time'> Your last login was {(elevated?.last_login) ? elevated.last_login : 'just now'}</span>
      </div>
       {(elevated?.owner === true) ? 
         <>

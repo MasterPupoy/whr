@@ -8,6 +8,7 @@ p {
 
 .banner {
   text-align: right;
+  margin-left: 100px;
 }
 
 .row_careers {
@@ -63,5 +64,5 @@ p {
 .banner_qoute {
   margin-top: 60px;
   font-family: "Merienda", cursive;
-  font-size: 50px;
+  font-size: 30px;
 }

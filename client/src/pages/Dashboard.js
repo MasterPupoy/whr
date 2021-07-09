@@ -13,6 +13,7 @@ import companyContext from '../contexts/companyContext';
 import '../css/dashboard.css'
 import { GATEWAY_URL } from '../helper';
 import Sidebar from '../components/dashboard/Sidebar';
+import { getValues } from '../helper';
 
 export default function Dashboard(){
   const { path } = useRouteMatch();
@@ -35,29 +36,34 @@ export default function Dashboard(){
         },
       }).then(res => res.json()).then(employee => {
         
-        setUser(employee);  
-      
-        fetch(`${GATEWAY_URL}/whr/organization/${employee.company_id}`, {
-          method : 'GET',
-          headers : {
-            'Authorization' : `${token}`
-          },
-        }).then(res => res.json()).then(company => {
+        setUser(employee);
+        console.log(employee)
+        if(!employee.company_id){
+          
+          if(token){
+            getValues(employee._id);
+          }
+        
+          }else{
 
-          setCompany(company)
-          
-        });
-          
-      });
+            fetch(`${GATEWAY_URL}/whr/organization/${employee.company_id}`, {
+              method : 'GET',
+              headers : {
+                'Authorization' : `${token}`
+              },
+            }).then(res => res.json()).then(company => {
+
+              setCompany(company)
+              
+            });
+          }
+      })
     }
-
     return () => mounted = false
-
   }, [token])
   
   const logout = () => {
     let date = new Date().toString()
-    console.log(date);
     fetch(`${GATEWAY_URL}/whr/employee/${localStorage.getItem('id')}`, {
       method: 'PUT',
       headers : {
@@ -68,7 +74,7 @@ export default function Dashboard(){
         last_logout : date
       })
     }).then(res => res.json()).then(data => {
-  
+      console.log(data)
       if(data){
         localStorage.clear();
         setLoggedIn(false);
@@ -99,8 +105,8 @@ export default function Dashboard(){
               <Route path={`${path}/inbox`} component={Inbox} />
               <Route path={`${path}/settings`} component={Settings} />
               <Route path={`${path}/reports`} component={Reports} />
-              <Route path={`${path}/recruitment`} component={Recruitment} />
-              <Route path={`${path}/employees`} component={Employees} />
+              {(user?.owner === true) ?  <Route path={`${path}/recruitment`} component={Recruitment} /> : null}
+              {(user?.owner === true) ? <Route path={`${path}/employees`} component={Employees} /> : null}
             </Switch>
         </div>
         </userContext.Provider>

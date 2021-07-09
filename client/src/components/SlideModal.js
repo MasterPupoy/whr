@@ -7,7 +7,7 @@ export default function SlideModal({ modalStyle = 'modal_custom', modalBackdrop 
   useEffect(() => {
     if(show){
       modalRef.current.classList.add('visible');
-      console.log(modalRef.current.classList)
+
     }else{
       modalRef.current.classList.remove('visible');
     }
