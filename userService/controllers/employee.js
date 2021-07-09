@@ -153,7 +153,6 @@ module.exports.editDetails = (params, updates) => {
     if(err){
       handlErr(err)
     }
-    console.log(employee)
     return employee
   });
 };

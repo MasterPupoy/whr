@@ -74,7 +74,7 @@ export default function Dashboard(){
         last_logout : date
       })
     }).then(res => res.json()).then(data => {
-      console.log(data)
+ 
       if(data){
         localStorage.clear();
         setLoggedIn(false);
