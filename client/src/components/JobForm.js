@@ -48,7 +48,7 @@ export default function JobForm({ onClick }){
         remote : (setup.current.value.trim().toLowerCase() === 'remote') ? true : false 
       })
     }).then(res => res.json()).then(data => {
-        console.log(data)
+    
         if(data){
 
           const Toast = Swal.mixin({

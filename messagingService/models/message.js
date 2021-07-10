@@ -29,4 +29,4 @@ const messageSchema = new Schema({
   }
 }, {timestamps : true})
 
-module.exports = mongoose.model('Mail', messageSchema, 'Mails' );
+module.exports = mongoose.model('Mail', messageSchema );

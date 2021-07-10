@@ -96,4 +96,4 @@ const applicantSchema = new Schema({
   }
 }, { timestamps: true });
 
-module.exports = mongoose.model('Applicant', applicantSchema, 'Applicants');
+module.exports = mongoose.model('Applicant', applicantSchema);
