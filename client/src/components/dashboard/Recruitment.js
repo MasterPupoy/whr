@@ -61,7 +61,7 @@ export default function Recruitment(){
     };
     
     
-  }, [key, company_id]);
+  }, [key, company_id, show]);
   
   const setInterview = (candidate) => {
     

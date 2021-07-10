@@ -70,9 +70,9 @@ export default function Careers(){
                   return (
                   <Row key={i} className='row_openings'>
                       <Col>
-                        <h3>{job.title}</h3>
-                        <p>{job.company_id.company_name}</p>
-                        <p>{job.company_id.industry} industry</p>
+                        <h3>{job?.title}</h3>
+                        <p>{job?.company_id.company_name}</p>
+                        <p>{job?.company_id.industry} industry</p>
                         <p 
                           style={{fontSize : '15px'}}
                         >
@@ -80,13 +80,13 @@ export default function Careers(){
                         </p>
                       </Col>
                       <Col>
-                        <h5>{job.experience}</h5>
-                        <h5>{job.salary}</h5>
-                        <h5>{job.type}</h5>
-                        <p>{job.description}</p>
+                        <h5>{job?.experience}</h5>
+                        <h5>{job?.salary}</h5>
+                        <h5>{job?.type}</h5>
+                        <p>{job?.description}</p>
                         <Link
                           className='apply_now_button'
-                          to={`/apply/${job._id}`}
+                          to={`/apply/${job?._id}`}
                         >
                           Apply Now!
                         </Link>

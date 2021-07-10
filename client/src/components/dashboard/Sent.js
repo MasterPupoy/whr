@@ -19,7 +19,7 @@ export default function WorkInbox(){
     fetch(`${GATEWAY_URL}/email/delivery/sent/${id}`, {
       method : 'GET'
     }).then(res => res.json()).then(data => setInbox(data));
-  }, [id]);
+  }, [id, show]);
 
   const openMessage = (id, message) => {
 

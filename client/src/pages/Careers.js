@@ -5,6 +5,7 @@ import whr from '../static/whr3.png';
 import whr_enterprise from '../static/whr2.png';
 import whr_small from '../static/whr3_small.png';
 import '../css/careers.css';
+import { version } from '../helper';
 
 export default function Careers(){
   return(
@@ -28,6 +29,14 @@ export default function Careers(){
           <Nav.Link style={{paddingRight: '50px'}} href="/Register">Register</Nav.Link>
           <Nav.Link style={{paddingRight: '50px'}} href="/login">Login</Nav.Link>
         </Nav>
+        <span
+          style={{
+            color : '#fff',
+            fontSize : '12px'
+          }}
+        >
+          {version}
+        </span>
       </Navbar>
       <br />
       <div className='layered'>

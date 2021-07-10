@@ -5,7 +5,7 @@ import CustomButton from '../components/CustomButton';
 import GoogleLoginButton from '../components/GoogleLogin';
 import Alert from '../components/Alert';
 import '../css/login.css';
-import { GATEWAY_URL } from '../helper';
+import { GATEWAY_URL, version } from '../helper';
 import whr_enterprise from '../static/whr2.png'
 import icon from '../static/whr2_icon.png';
 
@@ -84,7 +84,6 @@ export default function Login(){
       return res.json()
     }).then(data => {
 
-      console.log(data)
       return data
     });
     }).catch(err => console.log(err))
@@ -93,8 +92,6 @@ export default function Login(){
       setError('Something went wrong! Error code : 500')
       return setShowError(true);
     }
-
-
   };
 
   const googleAuthentication = async (response) => {
@@ -188,6 +185,9 @@ export default function Login(){
             <section>
               <span>Is your company registered  ? </span>
               <Link to="/register">Register now</Link>
+            </section>
+            <section>
+              <span>{version}</span>
             </section>
 
           </Form>

@@ -24,6 +24,8 @@ export const socket = io('http://localhost:5000',{
 
 export const GATEWAY_URL = 'http://104.236.215.216:4000'
 
+export const version = 'v1.4 alpha'
+
 export const months = [
   'January',
   'February',

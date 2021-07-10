@@ -3,6 +3,7 @@ import { Form, Col, Row, Button } from 'react-bootstrap';
 import { RiDoorOpenFill } from 'react-icons/ri';
 import userContext from '../contexts/userContext';
 import { GATEWAY_URL } from '../helper';
+import Swal from 'sweetalert2';
 
 export default function JobForm({ onClick }){
   const job_title = useRef(null);
@@ -14,25 +15,21 @@ export default function JobForm({ onClick }){
 
   const user = useContext(userContext); 
 
-
   const postVacancy = async (e) => {
     e.preventDefault();
 
-    console.log(job_title.current.value, setup.current.value, experience.current.value,
-    type.current.value, salary.current.value, description.current.value);
+      // let job = {
+      //   company_id: localStorage.getItem('cid'),
+      //   title: job_title.current.value.trim(), 
+      //   setup: setup.current.value.trim(), 
+      //   experience: experience.current.value.trim(),
+      //   type: type.current.value.trim(), 
+      //   salary: salary.current.value.trim(), 
+      //   description: description.current.value.trim(),
+      //   remote : (setup.current.value.trim().toLowerCase() === 'remote') ? true : false 
+      // }
 
-      let job = {
-        company_id: localStorage.getItem('cid'),
-        title: job_title.current.value.trim(), 
-        setup: setup.current.value.trim(), 
-        experience: experience.current.value.trim(),
-        type: type.current.value.trim(), 
-        salary: salary.current.value.trim(), 
-        description: description.current.value.trim(),
-        remote : (setup.current.value.trim().toLowerCase() === 'remote') ? true : false 
-      }
-
-      console.log(job)
+ 
 
     await fetch(`${GATEWAY_URL}/apply/jobs/createJob`, {
       method: 'POST',
@@ -53,7 +50,24 @@ export default function JobForm({ onClick }){
     }).then(res => res.json()).then(data => {
         console.log(data)
         if(data){
-          window.location.reload();
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Job Posted'
+          })
+
         }
       }
     );
