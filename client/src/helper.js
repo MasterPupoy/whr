@@ -22,7 +22,7 @@ export const socket = io('http://localhost:5000',{
   path: '/email'
 });
 
-export const GATEWAY_URL = 'http://104.236.215.216/'
+export const GATEWAY_URL = 'http://104.236.215.216'
 
 export const months = [
   'January',
