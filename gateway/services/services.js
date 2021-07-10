@@ -3,10 +3,10 @@ All api service url
 */
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
-const APPLICANT_SERVICE_URL = 'http://localhost:5001';
-const USER_SERVICE_URL = 'http://localhost:5002';
-const FILE_SERVICE_URL = 'http://localhost:5003';
-const EMAIL_SERVICE_URL = 'http://localhost:5004';
+const APPLICANT_SERVICE_URL = 'http://localhost:4001';
+const USER_SERVICE_URL = 'http://localhost:4002';
+const FILE_SERVICE_URL = 'http://localhost:4003';
+const EMAIL_SERVICE_URL = 'http://localhost:4004';
 
 const APPLICANT_SERVICE = createProxyMiddleware({
   target: APPLICANT_SERVICE_URL,

@@ -10,7 +10,7 @@ const {
 
 const auth = require('./services/auth');
 
-const PORT = 5000;
+const PORT = 4000;
 
 gateway.use('/apply', APPLICANT_SERVICE);
 gateway.use('/whr', USER_SERVICE);

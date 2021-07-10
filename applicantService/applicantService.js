@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const applicantRoutes = require('./routes/applicantRoutes');
 const jobRoutes = require('./routes/jobRoutes');
 
-const PORT = 5001;
+const PORT = 4001;
 require('dotenv').config();
 
 // DB_URI on env

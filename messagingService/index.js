@@ -18,7 +18,7 @@ const mailRoutes = require('./routes/emailRoutes');
 
 require('dotenv').config();
 
-const PORT =  5004;
+const PORT =  4004;
 const DB_URI = process.env.DB_URI;
 
 emailService.use(cors());
