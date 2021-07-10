@@ -24,7 +24,7 @@ const DB_URI = process.env.DB_URI;
 emailService.use(cors());
 emailService.use(express.json());
 
-mongoose.connect(`${DB_URI}`, {
+mongoose.connect(`mongodb+srv://master_pupoy:wi7nB3Tv78go5DJQ@cluster1.zhjgs.mongodb.net/whr3?retryWrites=true&w=majority`, {
   useUnifiedTopology : true,
   useNewUrlParser: true,
   useFindAndModify: false

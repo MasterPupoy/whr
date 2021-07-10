@@ -37,7 +37,6 @@ export default function Dashboard(){
       }).then(res => res.json()).then(employee => {
         
         setUser(employee);
-        console.log(employee)
         if(!employee.company_id){
           
           if(token){

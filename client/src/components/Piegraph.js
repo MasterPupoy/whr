@@ -80,7 +80,6 @@ export default function PieChart(){
 
   }
 
-  console.log(dataset, label)
 
   const total = (dataset) => {
     let total_value = 0

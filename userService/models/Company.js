@@ -44,4 +44,4 @@ const companySchema = new Schema({
   }],
 }, { timestamps: true });
 
-module.exports = mongoose.model('Company', companySchema, 'Companies');
+module.exports = mongoose.model('Company', companySchema);

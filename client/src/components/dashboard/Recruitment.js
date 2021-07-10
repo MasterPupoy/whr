@@ -27,7 +27,6 @@ export default function Recruitment(){
   const company = useContext(companyContext);
   const company_id = localStorage.getItem('cid');
   
-  console.log(company)
   useEffect(() => {
     if(key === 'jobs'){
       

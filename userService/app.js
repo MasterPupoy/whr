@@ -2,8 +2,6 @@ const express = require('express');
 const userService = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
-const employeeRoutes = require('./routes/employeeRoutes');
-const companyRoutes = require('./routes/companyRoutes');
 
 const PORT = 5002;
 
@@ -18,7 +16,7 @@ userService.use(cors());
 userService.use(express.json());
 
 // configure mongoose
-mongoose.connect(`${DB_URI}`, {
+mongoose.connect(`mongodb+srv://master_pupoy:wi7nB3Tv78go5DJQ@cluster1.zhjgs.mongodb.net/whr3?retryWrites=true&w=majority`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
@@ -27,6 +25,10 @@ mongoose.connect(`${DB_URI}`, {
 }).catch(err => console.log(err));
 
 mongoose.connection.once('open', () => console.log('Connected to MongoDB atlas'));
+
+const employeeRoutes = require('./routes/employeeRoutes');
+const companyRoutes = require('./routes/companyRoutes');
+
 
 // configure routes
 userService.use('/employee', employeeRoutes);

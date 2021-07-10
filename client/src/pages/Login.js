@@ -50,7 +50,6 @@ export default function Login(){
       })
     }).then(res => res.json()).then(data => { 
       
-      console.log(data)
       if(data.error === "incorrect password"){
         setError('Invalid email or password')
         setShowError(true)

@@ -95,7 +95,7 @@ export default function AddForm({ onClick }){
       <Form onSubmit={addEmployee}>
         <h3><AiOutlineForm /> Add Employee</h3>
         
-        <Form.Group controlId="first_name">
+        <Form.Group controlId="employee_id">
           <Form.Label>Employee ID</Form.Label>
           <Form.Control type="text" placeholder="Emlpoyee ID" ref={employee_id} required/>
         </Form.Group>
@@ -183,12 +183,12 @@ export default function AddForm({ onClick }){
           <Form.Control type="text" placeholder="Compensation" ref={expected_compensation} />
         </Form.Group>
 
-        <Form.Group as={Col} controlId="zip_code">
+        <Form.Group as={Col} controlId="password">
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" placeholder="Temporary Password" ref={temp_password} required/>
         </Form.Group>
 
-        <Form.Group as={Col} controlId="zip_code">
+        <Form.Group as={Col} controlId="verify_password">
           <Form.Label>Verify Password</Form.Label>
           <Form.Control type="password" placeholder="Verify temporary password" ref={verify_password} required/>
         </Form.Group>
