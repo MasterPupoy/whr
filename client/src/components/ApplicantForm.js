@@ -9,7 +9,6 @@ import './component_styles/applicantForm.css'
 export default function ApplicationForm({ candidate, onClick }){
   const interview_date = useRef(null);
 
-  console.log(candidate)
   const setInterviewSchedule = () => {
     
     fetch(`${GATEWAY_URL}/apply/openings/${candidate?._id}`,{
