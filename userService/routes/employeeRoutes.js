@@ -101,7 +101,7 @@ router.put('/change/:employee_id', auth.verify, (req, res) => {
   let params = req.params.employee_id
   let update = req.body.pass
 
-  employeeController.editDetails(params, update).then(updatedEmployee => res.send(updatedEmployee));
+  employeeController.changePass(params, update).then(updatedEmployee => res.send(updatedEmployee));
 });
 
 //register employee 

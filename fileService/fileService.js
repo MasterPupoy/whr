@@ -11,7 +11,7 @@ const fileController = require('./controllers/fileControllers');
 require('dotenv').config();
 
 const DB_URI = process.env.DB_URI;
-const PORT = 5003;
+const PORT = 4003;
 
 app.use(cors());
 app.use(fileUpload());

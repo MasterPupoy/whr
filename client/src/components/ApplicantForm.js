@@ -9,6 +9,7 @@ import './component_styles/applicantForm.css'
 export default function ApplicationForm({ candidate, onClick }){
   const interview_date = useRef(null);
 
+  console.log(candidate)
   const setInterviewSchedule = () => {
     
     fetch(`${GATEWAY_URL}/apply/openings/${candidate?._id}`,{
@@ -94,11 +95,10 @@ export default function ApplicationForm({ candidate, onClick }){
                         <strong>Expected Salary</strong>   : {candidate?.expected_compensation}<br />
                         <strong>Message</strong>   : <br />
                         {candidate?.message}
-                        
-                        <a href={`${GATEWAY_URL}/file?path=${candidate?.resume}`} download>
+                      </p>
+                        <a href={`${GATEWAY_URL}/file/file?path=${candidate?.resume}`} download>
                           <Button variant='info'>View Resume'</Button>
                         </a>
-                      </p>
                     </div>
                   </Tab.Pane>
                 </Tab.Content>

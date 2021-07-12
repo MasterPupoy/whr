@@ -36,7 +36,7 @@ export default function ApplicationModal(props){
 
   const apply = async (e) => {
     e.preventDefault()
-    console.log('fired');
+ 
 
     await fetch(`${GATEWAY_URL}/apply/openings/register`, {
       method : 'POST',
