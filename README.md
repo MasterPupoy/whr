@@ -2,15 +2,16 @@
 Working Human is a project in progress that aims to be at par with the smart HR systems currently in the market.
 
 This project is built with the intention of following the microservices architecture. All services are deployed using pm2.
-                                        ---> applicantService --> mongoDB
-                                        |
-                                        ---> userService --> mongoDB
-                                        |
-  client -> nginx -----> API GATEWAY <-->
-                                        |
-                                        ---> fileService --> mongoDB
-                                        |
-                                        ---> messaginService --> mongoDB
+
+                                          ---> applicantService --> mongoDB
+                                          |
+                                          ---> userService --> mongoDB
+                                          |
+    client -> nginx -----> API GATEWAY <-->
+                                          |
+                                          ---> fileService --> mongoDB
+                                          |
+                                          ---> messaginService --> mongoDB
 
 # Directories
 <dl>
