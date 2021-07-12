@@ -67,8 +67,8 @@ export default function Settings(){
           <p>Status : {employee?.status}</p>
           <p>Email : {employee?.official_email}</p>
           <p>Joined on : {employee?.joining_date?.toString().slice(0,10)}</p>
-          <p>Last login : {employee?.last_login.slice(0,25)}</p>
-          <p>Last logout : {employee?.last_logout.slice(0,25)}</p>
+          <p>Last login : {employee?.last_login?.slice(0,25)}</p>
+          <p>Last logout : {employee?.last_logout?.slice(0,25)}</p>
       </div>
       <Button 
         className='password_button' 
