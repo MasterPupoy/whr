@@ -16,7 +16,7 @@ app.use(cors());
 app.use(fileUpload());
 
 
-mongoose.connect(`mongodb+srv://master_pupoy:wi7nB3Tv78go5DJQ@cluster1.zhjgs.mongodb.net/whr3?retryWrites=true&w=majority`, {
+mongoose.connect(`${DB_URI}`, {
   useUnifiedTopology: true,
   useNewUrlParser: true,
   useFindAndModify: false
