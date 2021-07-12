@@ -96,6 +96,14 @@ router.put('/:employee_id', auth.verify, (req, res) => {
 });
 
 
+// change password details update
+router.put('/change/:employee_id', auth.verify, (req, res) => {
+  let params = req.params.employee_id
+  let update = req.body.pass
+
+  employeeController.editDetails(params, update).then(updatedEmployee => res.send(updatedEmployee));
+});
+
 //register employee 
 router.post('/add', auth.verify, (req, res) => {
   let params = {

@@ -1,10 +1,11 @@
 import React, { useEffect,  useState } from 'react';
-import { GATEWAY_URL, changePass } from '../../helper';
+import { GATEWAY_URL, changePass, version } from '../../helper';
 import './css/settings.css';
 import male_avatar from '../../static/male_avatar.png';
 import female_avatar from '../../static/female_avatar.png';
 import fallback from '../../static/profile_pic.png';
 import { Button } from 'react-bootstrap';
+import whr from '../../static/whr2.png'
 
 
 export default function Settings(){
@@ -48,6 +49,11 @@ export default function Settings(){
 
   return(
     <div style={{paddingTop : '60px'}}>
+      <div className='brand' >
+        <p>Powered by:</p>
+        <img src={whr} alt='whr' />
+        <p>{version}</p>
+      </div>
       <div className='info' >
         <img className='avatar' src={bg} alt='male_avatar' />
         <div className='name'>
@@ -60,7 +66,7 @@ export default function Settings(){
           <p>Position : {employee?.designation}</p>
           <p>Status : {employee?.status}</p>
           <p>Email : {employee?.official_email}</p>
-          <p>Joined : {employee?.joining_date?.toString().slice(0,10)}</p>
+          <p>Joined on : {employee?.joining_date?.toString().slice(0,10)}</p>
           <p>Last login : {employee?.last_login.slice(0,25)}</p>
           <p>Last logout : {employee?.last_logout.slice(0,25)}</p>
       </div>

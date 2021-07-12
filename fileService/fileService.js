@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const path = require('path');
 const fileUpload = require('express-fileupload');
+const fs = require('fs');
 
 const fileController = require('./controllers/fileControllers');
 
@@ -27,9 +28,6 @@ mongoose.connection.once('open', () => console.log('Connected to MongoDB atlas')
 // upload file then save to database
 app.post('/upload/:applicant_id', async (req, res) => {
  
-
-  console.log(req.files);
-
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).send('No files were uploaded.');
   }
@@ -47,7 +45,7 @@ app.post('/upload/:applicant_id', async (req, res) => {
       return res.status(500).send(err);
     };
 
-    let pathToFile = path.join(__dirname, 'uploads', filename);
+    let pathToFile = path.join('uploads', filename);
     // req.body contains the applicant ID
     let params = {
     applicant_id : req.params.applicant_id,
@@ -64,13 +62,7 @@ app.post('/upload/:applicant_id', async (req, res) => {
 });
 
 app.get('/file', (req, res) => {
-  const toFile = req.body.path
-  const filePath = fs.createWriteStream(toFile);
-  res.pipe(filePath);
-  filePath.on('finish',() => {
-      filePath.close();
-      console.log('Download Completed'); 
-  })
+  res.download(req.query.path)
 });
 
 app.listen(PORT, () => {

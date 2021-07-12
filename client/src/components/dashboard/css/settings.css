@@ -2,6 +2,10 @@
   font-size: 16px;
 }
 
+.smaller {
+  margin-left: 350px;
+}
+
 .avatar {
   width: 250px;
   height: 250px;
@@ -12,6 +16,7 @@
 .info {
   display: flex;
   width: 100%;
+  margin-left: 300px;
 }
 
 .name {
@@ -25,4 +30,24 @@
 
 .password_button {
   border-radius: 1px;
+  margin-left: 350px;
+}
+
+.brand {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+.brand p {
+  font-size: 10px;
+  margin: 0;
+  color: #d5d5d5;
+}
+
+.brand img {
+  height: 153px;
+  width: 153px;
+  border-radius: 5px;
+  box-shadow: 0 5px 10px 0 rgba(31, 38, 135, 0.37);
 }

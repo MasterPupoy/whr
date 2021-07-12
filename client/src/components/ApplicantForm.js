@@ -94,6 +94,10 @@ export default function ApplicationForm({ candidate, onClick }){
                         <strong>Expected Salary</strong>   : {candidate?.expected_compensation}<br />
                         <strong>Message</strong>   : <br />
                         {candidate?.message}
+                        
+                        <a href={`${GATEWAY_URL}/file?path=${candidate?.resume}`} download>
+                          <Button variant='info'>View Resume'</Button>
+                        </a>
                       </p>
                     </div>
                   </Tab.Pane>
