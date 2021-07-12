@@ -18,7 +18,12 @@ export default function WorkInbox(){
   useEffect(() => {
     fetch(`${GATEWAY_URL}/email/delivery/sent/${id}`, {
       method : 'GET'
-    }).then(res => res.json()).then(data => setInbox(data));
+    }).then(res => res.json()).then(data => {
+       if(data){
+        let inbox = data.reverse()
+        setInbox(inbox)
+      }
+    });
   }, [id, show]);
 
   const openMessage = (id, message) => {

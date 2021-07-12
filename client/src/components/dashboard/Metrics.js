@@ -10,17 +10,19 @@ import userContext from '../../contexts/userContext';
 import companyContext from '../../contexts/companyContext';
 import { GATEWAY_URL } from '../../helper';
 import { HiOutlineCake } from 'react-icons/hi';
-import { GiPartyPopper } from 'react-icons/gi';
+import { GiPartyPopper, GiGlassCelebration } from 'react-icons/gi';
 
 export default function Metrics(){
   const elevated = useContext(userContext);
   const company = useContext(companyContext);
   const company_id = localStorage.getItem('cid');
+  const id = localStorage.getItem('id')
   const [interviews, setInterviews] = useState([]);
   const [celebrators, setCelebrators] = useState([]);
   const [joinees, setJoinees] = useState([]);
   const [candidateCount, setCount] = useState();
   const [waiting, setWaiting] = useState();
+  const [unread, setUnread] = useState();
 
   useEffect(() => {     
     fetch(`${GATEWAY_URL}/apply/openings/applications/${company_id}`, {
@@ -114,7 +116,11 @@ export default function Metrics(){
         setJoinees(joiners);
       });
 
-  }, [company_id])
+      fetch(`${GATEWAY_URL}/email/delivery/inbox/${id}`, {
+        method : 'GET'
+      }).then(res => res.json()).then(data => setUnread(data.length));
+
+  }, [company_id, id])
   
   return(
     <>
@@ -199,16 +205,11 @@ export default function Metrics(){
                 New Joinees 
                 <span style={{color : '#fff'}} className='muted'> - Last 7 Days</span>
               </h5>
-              <Table striped bordered hover>
+              <Table hover>
               {(joinees?.length > 0) ? 
                 <Table hover>
                     <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Position</th>
-                        <th>Joined On</th>
-                      </tr>
+                      <th><strong>Welcome to  </strong></th>
                     </thead>
                     <tbody>
                       {joinees.map((candidate, i) => {
@@ -216,7 +217,7 @@ export default function Metrics(){
             
                         return (                      
                           <tr>
-                            <td>{candidate.first_name} {candidate.last_name}</td>
+                            <td> <GiGlassCelebration /> {candidate.first_name} {candidate.last_name}</td>
                             <td>{candidate.official_email}</td>
                             <td>{candidate.designation}</td>
                             <td>{date.slice(0, 16)}</td>
@@ -228,7 +229,7 @@ export default function Metrics(){
                 :
                 <div className='interview_filler'>
                   <MdDateRange className='icon' /><br />
-                  <h3>No interviews so far</h3>
+                  <h3>No new hires so far</h3>
                 </div>
 
               }
@@ -256,10 +257,14 @@ export default function Metrics(){
                 <IoMdPersonAdd />  Notifications
               </ListGroup.Item>
               <ListGroup.Item>
+               <Badge 
+                variant={(unread === 0) ? 'success' : 'danger'}
+              >
+                {unread}
+              </Badge> 
                 Unread Messages
               </ListGroup.Item>
             </ListGroup>
-          
             
           </div>
         </>
@@ -268,23 +273,35 @@ export default function Metrics(){
           <div className='first-metric-container'>
             <div className='interview-table'>
               <h5 className='table-head'>Workplace @ <span className='title'>{company?.company_name}</span></h5>
-              <Table striped bordered hover>
-                  {/*<thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                  </tbody>*/}
+              <Table >
+                 {(joinees?.length > 0) ? 
+                    <>
+                      <thead>
+                        <th><strong>Welcome to  </strong></th>
+                      </thead>
+                      <tbody>
+                        {joinees.map((candidate, i) => {
+                          let date = new Date(candidate.joining_date).toString()
+              
+                          return (                      
+                            <tr>
+                              <td> <GiGlassCelebration /> {candidate.first_name} {candidate.last_name}</td>
+                              <td>{candidate.official_email}</td>
+                              <td>{candidate.designation}</td>
+                              <td>{date.slice(0, 16)}</td>
+                            </tr>                                            
+                          )
+                        })}                     
+                      </tbody>
+                    </>
+
+                    :
+
+                    <div className='interview_filler'>
+                      <MdDateRange className='icon' /><br />
+                      <h3>No new hires so far</h3>
+                    </div>
+                  }
               </Table>
             </div>
 
@@ -322,29 +339,22 @@ export default function Metrics(){
 
           <div className='second-metric-container'>
             <h4><MdDateRange className='icon' /> {new Date().toString().slice(0,16)}</h4>
-            <ListGroup className='event-list' defaultActiveKey="#link1">
-              <ListGroup.Item className='event-head'>
-                <BsPeopleFill />  Candidates Summary
-              </ListGroup.Item>
-              <ListGroup.Item>
-                <Badge variant='success'>{candidateCount}</Badge> New Candidates
-              </ListGroup.Item>
-                <ListGroup.Item>
-                <Badge variant='success'>{waiting}</Badge> Waiting For my Action 
-              </ListGroup.Item>
-            </ListGroup>
 
             <ListGroup className='event-list' defaultActiveKey="#link1">
               <ListGroup.Item className='event-head'>
-                <IoMdPersonAdd />  Offer to hire highlights
+                <IoMdPersonAdd />  Notifications
               </ListGroup.Item>
               <ListGroup.Item>
-                Offers Made
-              </ListGroup.Item>
-                <ListGroup.Item>
-                Offers Accepted
+               <Badge 
+                variant={(unread === 0) ? 'success' : 'danger'}
+              >
+                {unread}
+              </Badge> 
+                Unread Messages
               </ListGroup.Item>
             </ListGroup>
+          
+            
           </div>
         </>
       }
