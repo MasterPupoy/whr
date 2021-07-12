@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, ListGroup } from 'react-bootstrap';
+import { Table, ListGroup, Badge } from 'react-bootstrap';
 import { BsPeopleFill } from 'react-icons/bs';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { GiAbstract050 } from 'react-icons/gi';
@@ -9,6 +9,8 @@ import './css/metrics.css';
 import userContext from '../../contexts/userContext';
 import companyContext from '../../contexts/companyContext';
 import { GATEWAY_URL } from '../../helper';
+import { HiOutlineCake } from 'react-icons/hi';
+import { GiPartyPopper } from 'react-icons/gi';
 
 export default function Metrics(){
   const elevated = useContext(userContext);
@@ -16,12 +18,26 @@ export default function Metrics(){
   const company_id = localStorage.getItem('cid');
   const [interviews, setInterviews] = useState([]);
   const [celebrators, setCelebrators] = useState([]);
+  const [joinees, setJoinees] = useState([]);
+  const [candidateCount, setCount] = useState();
+  const [waiting, setWaiting] = useState();
 
   useEffect(() => {     
     fetch(`${GATEWAY_URL}/apply/openings/applications/${company_id}`, {
       method: 'GET'
     }).then(res => res.json()).then(data => {
-      console.log(data)
+      let newCandidate = [];
+      let waiting = [];
+
+      data.forEach(candidate => {
+        if(candidate.application_status === 1 && !candidate.rejected){
+          newCandidate.push(candidate);
+        }
+
+        if(candidate.for_interview && !candidate.hired){
+          waiting.push(candidate);
+        }
+      });
       
       let interviews = []
 
@@ -31,8 +47,9 @@ export default function Metrics(){
         }
       });
 
-      console.log(interviews);
       setInterviews(interviews);
+      setCount(newCandidate.length)
+      setWaiting(waiting.length);
 
     });
 
@@ -46,12 +63,58 @@ export default function Metrics(){
         company_id : company_id
       })
     }).then(res => res.json()).then(data => {
-    
-    
+
+      let celebrants = []
+      
+      data.forEach(employee => {
+        if(employee.date_of_birth){
+          let date = new Date();
+          let birthdate = new Date(employee.date_of_birth)
+
+          let today = [date.getMonth(), date.getDate()]
+
+          let bdate = [birthdate.getMonth(), birthdate.getDate()]
+
+          if(today.join('') === bdate.join('')){
+            celebrants.push(employee);
+          }
+        }      
+      });
+
+      setCelebrators(celebrants);
     
     });
 
-  }, [])
+    fetch(`${GATEWAY_URL}/whr/employee/employees`, {
+      method : 'POST',
+      headers : {
+        'Content-Type' : 'application/json',
+        'Authorization' : `${localStorage.getItem('act')}`
+      },
+      body : JSON.stringify({
+        company_id : company_id
+      })
+    }).then(res => res.json()).then(data => {
+
+        let joiners = [] 
+
+        data.forEach(employee => {
+
+          if(employee.joining_date){
+            let today = new Date().getTime();
+            let weekAgo = today - 640048770;
+            let hiredOn = new Date(employee.joining_date).getTime();
+        
+          if(hiredOn <= today && hiredOn >= weekAgo){
+            joiners.push(employee);
+            } 
+          }
+        })
+
+        setJoinees(joiners);
+      });
+
+  }, [company_id])
   
   return(
     <>
@@ -64,7 +127,7 @@ export default function Metrics(){
         <>
           <div className='first-metric-container'>
             <div className='interview-table'>
-              <h5 className='table-head'>Interviews</h5>
+              <h5 style={{background : '#3b4371', color : '#fff'}} className='table-head'>Interviews</h5>
               {(interviews?.length > 0) ? 
                 <Table hover>
                     <thead>
@@ -100,61 +163,174 @@ export default function Metrics(){
             </div>
 
             <div className='interview-table'>
-              <h5 className='table-head'>Celebration Corner</h5>
-              <Table striped bordered hover>
-                  {/*<thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                  </tbody>*/}
-              </Table>
+              <h5 style={{background : '#3b4371', color : '#fff'}} className='table-head'>Celebration Corner</h5>
+              {(celebrators.length > 0) ? 
+                <Table hover>
+                    <thead>
+                      <th><strong>Happy Birthday to </strong></th>
+                    </thead>
+                    <tbody>
+                      {celebrators.map((candidate, i) => {
+            
+                        return (                      
+                          <tr style={{ textAlign : 'center'}}>
+                            <td><GiPartyPopper /> {candidate.first_name} {candidate.last_name}</td>
+                            <td>{candidate.designation}</td>
+                          </tr>                                            
+                        )
+                      })}                     
+                    </tbody>
+                </Table>
+                :
+                <div className='interview_filler'>
+                  <HiOutlineCake className='icon' /><br />
+                  <h3>No celebrants for today</h3>
+                </div>
+
+              }
             </div>
+          
             
             <div className='interview-table'>
-              <h5 className='table-head'>New Joinees - <span className='muted'>Last 7 Days</span></h5>
+              <h5 
+                style={{background : '#3b4371', color : '#fff'}} 
+                className='table-head'
+              >
+                New Joinees 
+                <span style={{color : '#fff'}} className='muted'> - Last 7 Days</span>
+              </h5>
               <Table striped bordered hover>
-                  {/*<thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                  </tbody>*/}
+              {(joinees?.length > 0) ? 
+                <Table hover>
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th>Joined On</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {joinees.map((candidate, i) => {
+                        let date = new Date(candidate.joining_date).toString()
+            
+                        return (                      
+                          <tr>
+                            <td>{candidate.first_name} {candidate.last_name}</td>
+                            <td>{candidate.official_email}</td>
+                            <td>{candidate.designation}</td>
+                            <td>{date.slice(0, 16)}</td>
+                          </tr>                                            
+                        )
+                      })}                     
+                    </tbody>
+                </Table>
+                :
+                <div className='interview_filler'>
+                  <MdDateRange className='icon' /><br />
+                  <h3>No interviews so far</h3>
+                </div>
+
+              }
               </Table>
             </div>
 
           </div>
 
           <div className='second-metric-container'>
+            <h4><MdDateRange className='icon' /> {new Date().toString().slice(0,16)}</h4>
             <ListGroup className='event-list' defaultActiveKey="#link1">
               <ListGroup.Item className='event-head'>
                 <BsPeopleFill />  Candidates Summary
               </ListGroup.Item>
               <ListGroup.Item>
-                New Candidates
+                <Badge variant='success'>{candidateCount}</Badge> New Candidates
               </ListGroup.Item>
                 <ListGroup.Item>
-                Waiting For my Action 
+                <Badge variant='success'>{waiting}</Badge> Waiting For my Action 
+              </ListGroup.Item>
+            </ListGroup>
+
+            <ListGroup className='event-list' defaultActiveKey="#link1">
+              <ListGroup.Item className='event-head'>
+                <IoMdPersonAdd />  Notifications
+              </ListGroup.Item>
+              <ListGroup.Item>
+                Unread Messages
+              </ListGroup.Item>
+            </ListGroup>
+          
+            
+          </div>
+        </>
+        :
+        <>
+          <div className='first-metric-container'>
+            <div className='interview-table'>
+              <h5 className='table-head'>Workplace @ <span className='title'>{company?.company_name}</span></h5>
+              <Table striped bordered hover>
+                  {/*<thead>
+                    <tr>
+                      <th>#</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Username</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Mark</td>
+                      <td>Otto</td>
+                      <td>@mdo</td>
+                    </tr>
+                  </tbody>*/}
+              </Table>
+            </div>
+
+            <div className='interview-table'>
+              <h5 style={{background : '#3b4371', color : '#fff'}} className='table-head'>Celebration Corner</h5>
+              {(celebrators.length > 0) ? 
+                <Table hover>
+                    <thead>
+                      <th><strong>Happy Birthday to </strong></th>
+                    </thead>
+                    <tbody>
+                      {celebrators.map((candidate, i) => {
+                        let date = new Date(candidate.date_of_birth).toString()
+            
+                        return (                      
+                          <tr>
+                            <td><GiPartyPopper /> {candidate.first_name} {candidate.last_name}</td>
+                            <td>{candidate.designation}</td>
+                            <td>{date.slice(0, 16)}</td>
+                          </tr>                                            
+                        )
+                      })}                     
+                    </tbody>
+                </Table>
+                :
+                <div className='interview_filler'>
+                  <HiOutlineCake className='icon' /><br />
+                  <h3>No celebrants for today</h3>
+                </div>
+
+              }
+            </div>
+          </div>
+            
+
+          <div className='second-metric-container'>
+            <h4><MdDateRange className='icon' /> {new Date().toString().slice(0,16)}</h4>
+            <ListGroup className='event-list' defaultActiveKey="#link1">
+              <ListGroup.Item className='event-head'>
+                <BsPeopleFill />  Candidates Summary
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Badge variant='success'>{candidateCount}</Badge> New Candidates
+              </ListGroup.Item>
+                <ListGroup.Item>
+                <Badge variant='success'>{waiting}</Badge> Waiting For my Action 
               </ListGroup.Item>
             </ListGroup>
 
@@ -169,33 +345,8 @@ export default function Metrics(){
                 Offers Accepted
               </ListGroup.Item>
             </ListGroup>
-            
           </div>
         </>
-        :
-        <div className='first-metric-container'>
-          <div className='interview-table'>
-            <h5 className='table-head'>Workplace @ <span className='title'>{company?.company_name}</span></h5>
-            <Table striped bordered hover>
-                {/*<thead>
-                  <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                </tbody>*/}
-            </Table>
-          </div>
-        </div>
       }
     </>  
   )
