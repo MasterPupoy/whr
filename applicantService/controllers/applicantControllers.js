@@ -104,7 +104,7 @@ module.exports.hire = (params) => {
             joining_date: params.joining_date,
             remote: params.remote,
             compensation: params.compensation,
-            date_of_birth: params.date_of_birth
+            date_of_birth: applicant.date_of_birth
           });
 
           return newEmployee.save().then((employee, err) => {
