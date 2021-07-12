@@ -28,21 +28,19 @@ This project is built with the intention of following the microservices architec
 </dl>
 
 # Release notes
-<h3>v1.45 alpha <em>latest</em></h3>
-<ul>
-  <li>Updated dashboard ui and business logic</li>
-  <li>Temporarily disabled resume' upload while fixing file download features</li>
-  <li>Temporarily disabled send message feature on employee dashboard</li>
-  <li>Fixed total compensation computation on piegraph</li>
-  <li>Fixed candidate retrieval bugs</li>
-  <li>Fixed inbox and sent items</li>
-</ul>
-
 <h3>v1.46 alpha <em>Upcoming</em></h3>
 <ul>
-  <li>Fix talent pool and applicant status bugs</li>
-  <li>Fix resume upload and download</li>
-  <li>Fix send message on employee dashboard functionality</li>
-  <li>Remove chat function</li>
-  <li>Finish settings dashboard and employee details</li>
+  <li>Fixed talent pool and applicant status bugs</li>
+  <li>Fixed resume upload and download</li>
+  <li>Fixed send message on employee dashboard functionality</li>
+  <li>Removed chat function</li>
+  <li>Finished settings dashboard and employee details</li>
+</ul>
+
+<h3>v1.47 alpha <em>upcoming</em></h3>
+<ul>
+  <li>Updated dashboard ui and business logic</li>
+  <li>Include tab open indicaton on sidebar</li>
+  <li>Fix candidate retrieval bugs</li>
+  <li>Include search and sorting</li>
 </ul>
