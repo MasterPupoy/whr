@@ -28,7 +28,7 @@ This project is built with the intention of following the microservices architec
 </dl>
 
 # Release notes
-<h3>v1.46 alpha <em>Upcoming</em></h3>
+<h3>v1.46 alpha <em>latest</em></h3>
 <ul>
   <li>Fixed talent pool and applicant status bugs</li>
   <li>Fixed resume upload and download</li>
