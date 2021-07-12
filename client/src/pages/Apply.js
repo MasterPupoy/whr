@@ -4,6 +4,7 @@ import { Navbar, Nav, Container, Spinner, Form, Row, Col, Button } from 'react-b
 import { AiOutlineForm } from 'react-icons/ai';
 import { GATEWAY_URL } from '../helper';
 import whr_small from '../static/whr3_small.png';
+import Swal from 'sweetalert2';
 
 export default function ApplicationModal(props){
   const [job, setJob] = useState();
@@ -72,6 +73,23 @@ export default function ApplicationModal(props){
           body : formData
         }).then(res => res.text()).then(data => (data) ? setSuccess(true) : null);
        }
+
+       const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'Application Sent'
+        })
         
        return setSuccess(true)
       });
@@ -210,7 +228,7 @@ export default function ApplicationModal(props){
         : 
           <div style={{ textAlign: 'center'}}>
             <Spinner animation="border" role="status">
-              <span className="visually-hidden">Loading...</span>
+              <span className="visually-hidden"></span>
             </Spinner>
           </div>
         }

@@ -1,17 +1,57 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Table, ListGroup } from 'react-bootstrap';
 import { BsPeopleFill } from 'react-icons/bs';
 import { IoMdPersonAdd } from 'react-icons/io';
 import { GiAbstract050 } from 'react-icons/gi';
+import { MdDateRange } from 'react-icons/md';
 import Title from '../Title';
 import './css/metrics.css'; 
 import userContext from '../../contexts/userContext';
 import companyContext from '../../contexts/companyContext';
+import { GATEWAY_URL } from '../../helper';
 
 export default function Metrics(){
   const elevated = useContext(userContext);
   const company = useContext(companyContext);
+  const company_id = localStorage.getItem('cid');
+  const [interviews, setInterviews] = useState([]);
+  const [celebrators, setCelebrators] = useState([]);
 
+  useEffect(() => {     
+    fetch(`${GATEWAY_URL}/apply/openings/applications/${company_id}`, {
+      method: 'GET'
+    }).then(res => res.json()).then(data => {
+      console.log(data)
+      
+      let interviews = []
+
+      data.forEach(candidate => {
+        if(candidate.for_interview && !candidate.hired && !candidate.rejected){
+          interviews.push(candidate);
+        }
+      });
+
+      console.log(interviews);
+      setInterviews(interviews);
+
+    });
+
+    fetch(`${GATEWAY_URL}/whr/employee/employees`, {
+      method : 'POST',
+      headers : {
+        'Content-Type' : 'application/json',
+        'Authorization' : `${localStorage.getItem('act')}`
+      },
+      body : JSON.stringify({
+        company_id : company_id
+      })
+    }).then(res => res.json()).then(data => {
+    
+    
+    
+    });
+
+  }, [])
   
   return(
     <>
@@ -25,46 +65,38 @@ export default function Metrics(){
           <div className='first-metric-container'>
             <div className='interview-table'>
               <h5 className='table-head'>Interviews</h5>
-              <Table striped bordered hover>
-                  {/*<thead>
-                    <tr>
-                      <th>#</th>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Username</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Mark</td>
-                      <td>Otto</td>
-                      <td>@mdo</td>
-                    </tr>
-                  </tbody>*/}
-              </Table>
-            </div>
+              {(interviews?.length > 0) ? 
+                <Table hover>
+                    <thead>
+                      <tr>
+                        <th>Applicant</th>
+                        <th>Email</th>
+                        <th>Position Applied</th>
+                        <th>Interview Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {interviews.map((candidate, i) => {
+                        let date = new Date(candidate.interview_date).toString()
+            
+                        return (                      
+                          <tr>
+                            <td>{candidate.first_name} {candidate.last_name}</td>
+                            <td>{candidate.official_email}</td>
+                            <td>{candidate.designation}</td>
+                            <td>{date.slice(0, 16)}</td>
+                          </tr>                                            
+                        )
+                      })}                     
+                    </tbody>
+                </Table>
+                :
+                <div className='interview_filler'>
+                  <MdDateRange className='icon' /><br />
+                  <h3>No interviews so far</h3>
+                </div>
 
-            <div className='interview-table'>
-              <h5 className='table-head'>Referrals</h5>
-              <Table striped bordered hover>
-                {/*<thead>
-                  <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Username</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                </tbody>*/}
-              </Table>
+              }
             </div>
 
             <div className='interview-table'>

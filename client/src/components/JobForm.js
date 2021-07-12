@@ -68,6 +68,8 @@ export default function JobForm({ onClick }){
             title: 'Job Posted'
           })
 
+          window.location.reload();
+
         }
       }
     );

@@ -103,7 +103,8 @@ module.exports.hire = (params) => {
             password: bcrypt.hashSync(newRandomPassword, 10),
             joining_date: params.joining_date,
             remote: params.remote,
-            compensation: params.compensation
+            compensation: params.compensation,
+            date_of_birth: params.date_of_birth
           });
 
           return newEmployee.save().then((employee, err) => {
