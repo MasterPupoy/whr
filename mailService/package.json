@@ -5,12 +5,13 @@
   "main": "mail.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "nodemon ./mail.js"
+    "dev": "nodemon ./mail.js"
   },
   "author": "Aryan S. Delloson",
   "license": "ISC",
   "dependencies": {
     "mailparser": "^3.2.0",
+    "mongoose": "^5.13.2",
     "nodemon": "^2.0.12",
     "smtp-server": "^3.9.0"
   }
