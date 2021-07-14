@@ -2,7 +2,7 @@ const SMTPServer = require('smtp-server').SMTPServer;
 const parser = require('mailparser').simpleParser;
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb+srv://master_pupoy:wi7nB3Tv78go5DJQ@cluster1.zhjgs.mongodb.net/whr3?retryWrites=true&w=majority', {
+mongoose.connect(`${DB_URI}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false
