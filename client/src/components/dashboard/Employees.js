@@ -10,11 +10,17 @@ import AddForm from '../AddForm';
 import male_avatar from '../../static/male_avatar.png';
 import female_avatar from '../../static/female_avatar.png';
 import fallback from '../../static/profile_pic.png';
+import Compose from '../Compose';
+import ViewEmployee from '../ViewEmployee';
 
 export default function Employees(){
   const [employees, setEmployees] = useState([]);
   const [add, setAdd] = useState(false);
   const cid = localStorage.getItem('cid');
+  const [compose, setCompose] = useState();
+  const [to, setTo] = useState();
+  const [show, setShow] = useState(false);
+  const [viewEmployee, setViewEmployee] = useState();
 
   useEffect(() => {
 
@@ -28,20 +34,36 @@ export default function Employees(){
         company_id : cid
       })
     }).then(res => res.json()).then(data => setEmployees(data));
-  }, [cid, add])
+  }, [cid, add, show])
+
+  const seeDetails = (employee) => {
+
+    setViewEmployee(employee);
+
+  }
 
   return(
     <>
       <Title icon={<IoIosPeople />} title='Employees' />
       <SlideModal show={add} modalStyle='add_modal_Style'>
         <AddForm  onClick={() => setAdd(prevState => !prevState)} />
-      </SlideModal> 
+      </SlideModal>
+      <SlideModal show={show} modalStyle='add_modal_Style'>
+        <ViewEmployee employee={viewEmployee} onClick={() => setShow(prevState => !prevState)} />
+      </SlideModal>
+      <SlideModal show={compose} modalStyle='recruitment_modal_Style'>
+        <Compose 
+          recipient={to}
+          onClick={() => setCompose(prevState => !prevState)} 
+        />
+      </SlideModal>
       <div className='employee_container'>
         {(employees) ? 
             <div>
               {(employees.length > 0) ? 
                 <div className='employee_inner_container'>
                   {(employees.map((employee, i) => {
+        
                     let bg;
 
                     if(employee.gender === 'Male'){
@@ -69,18 +91,63 @@ export default function Employees(){
                         <h4>{employee.first_name} {employee.last_name}</h4>
                         <p><Badge variant='dark' >{employee.designation}</Badge></p>
                         <p><Badge variant='warning'>{(employee.owner) ? 'Sudo' : 'Non-Sudo'}</Badge></p>
+                        <p>
+                          <Badge variant={(employee.terminated) ? 'danger' : 'success'} >
+                            {(employee.terminated) ? 'Terminated' : 'Active'}
+                          </Badge>
+                        </p>
                         <div className='card_overlay'>
                           <div className='inside_text'>
+                            <Badge variant={(employee.terminated) ? 'danger' : 'success'} >
+                              {(employee.terminated) ? 'Terminated' : 'Active'}
+                            </Badge>
                             <p>{employee.first_name} {employee.last_name}</p>
                             <p>{employee.official_email}</p>
                             <p>{employee.designation}</p>
+                              {(employee?.terminated) ? 
+                                
+                                  <p 
+                                    style={{ 
+                                      color : '#fff', 
+                                      background : '#C70039',
+                                      width : '200px',
+                                      padding : '10px',
+                                      borderRadius : '5px',
+                                      fontSize : '12px'
+                                    }}
+                                  >
+                                    Terminated employees will <br />
+                                    be removed after 7 days
+                                  </p>
+                                :
+                                  <p>Last login : {employee?.last_login?.slice(0,16)}</p>
+                              }
                             <div>
                               {(employee._id === localStorage.getItem('id')) ? 
                                 <span>Active</span>
                                 :
-                                <button>Send a Message</button>
-
+                                <div>
+                                  <button 
+                                    className='send_message'
+                                    onClick={() => {
+                                      setTo(employee._id);
+                                      setCompose(prevState => !prevState)
+                                    }} 
+                                  >
+                                    Send a Message</button>
+                                  <button 
+                                    className='send_message'
+                                    onClick={() => {
+                                      seeDetails(employee);
+                                      setShow(prevState => !prevState)
+                                    }}
+                                  >
+                                    See Details
+                                  </button>
+                                </div>
+                                
                               }
+                             
                             </div>
                           </div>
                         </div>

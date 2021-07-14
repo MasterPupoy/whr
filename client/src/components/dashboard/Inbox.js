@@ -84,15 +84,15 @@ export default function Inbox(){
         <Compose onClick={() => setShow(prevState => !prevState)} />
       </SlideModal>
       <div className='first-inbox-container'>
-        <div className='list-container'>
+        <div className='list-container1'>
             <button className='list_container_button' onClick={() => setOpen('inbox')}>Inbox</button>
             <button className='list_container_button' onClick={() => setOpen('sent')}>Sent</button>
-            <button to='/chat' className='list_container_button' onClick={() => setOpen('chat')}>Chat</button>
+           
         </div>
       </div>
 
        <div className='second-inbox-container'>
-        <div className='list-container'>
+        <div className='list-container2'>
           {(open) ? 
              <Selection />
             :

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Button, Form, Row, Col, Tab, Nav } from 'react-bootstrap';
+import { Button, Form, Row, Col, Tab, Nav, Badge } from 'react-bootstrap';
 import { FaMicrophone } from 'react-icons/fa'
 import { BsPeopleCircle } from 'react-icons/bs';
 import { GATEWAY_URL } from '../helper';
@@ -43,7 +43,16 @@ export default function ApplicationForm({ candidate, onClick }){
 
   return (
     <div>
-      <h3><BsPeopleCircle/> {candidate?.first_name} {candidate?.last_name}</h3>
+      <h3>
+        <BsPeopleCircle/> {candidate?.first_name} {candidate?.last_name}
+        {(candidate?.hired) ? <Badge style={{marginLeft : '50px'}} variant='success'>Hired</Badge> : null}
+        {(candidate?.rejected) ? <Badge style={{marginLeft : '50px'}} variant='danger'>Rejected</Badge> : null}
+        {(candidate?.for_interview && !candidate?.hired) ? 
+          <Badge style={{marginLeft : '50px'}} variant='warning'>For Interview</Badge> 
+          : 
+          null
+        }
+      </h3>
       <div style={{padding : '20px'}}>
         <h5>Position: {candidate?.job_id.title}</h5>
         <h5>Type : {candidate?.job_id.type}</h5>
@@ -86,6 +95,9 @@ export default function ApplicationForm({ candidate, onClick }){
                         <strong>Message</strong>   : <br />
                         {candidate?.message}
                       </p>
+                        <a href={`${GATEWAY_URL}/file/file?path=${candidate?.resume}`} download>
+                          <Button variant='info'>View Resume'</Button>
+                        </a>
                     </div>
                   </Tab.Pane>
                 </Tab.Content>
@@ -93,16 +105,27 @@ export default function ApplicationForm({ candidate, onClick }){
             </Row>
           </Tab.Container>
         </div>
-        <Row> 
-        <h3><FaMicrophone /> Set Interview</h3>
-          <Form.Group as={Col} controlId="date_of_birth">
-            <Form.Label>Set Interview Date</Form.Label>
-            <Form.Control type="date" placeholder="Select One" ref={interview_date} required/>
-          </Form.Group>
-        </Row>
+        {(!candidate?.reviewed) ? 
+          <Row>
+          <h3><FaMicrophone /> Set Interview</h3>
+            <Form.Group as={Col} controlId="date_of_birth">
+              <Form.Label>Set Interview Date</Form.Label>
+              <Form.Control type="date" placeholder="Select One" ref={interview_date} required/>
+            </Form.Group>
+          </Row>
+
+          :
+
+          null
+          
+        }
+       
       </div>
-      
-      <Button className='set_interview_button' onClick={setInterviewSchedule}>Set Interview</Button>
+      {(!candidate?.reviewed) ?
+        <Button className='set_interview_button' onClick={setInterviewSchedule}>Set Interview</Button>
+       :
+        null
+      }
       <Button className='set_cancel_button' onClick={onClick}>Close</Button>
     </div>
   )

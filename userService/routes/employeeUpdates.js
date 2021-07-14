@@ -88,6 +88,10 @@ module.exports.includeUpdates = (req, res, next) => {
     updates.last_logout = data.last_logout
   }
 
+  if(data.terminated){
+    updates.terminated = data.terminated
+  }
+
   return updates;
 
 }

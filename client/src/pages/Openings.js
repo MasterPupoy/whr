@@ -18,7 +18,18 @@ export default function Careers(){
       headers: {
         'Content-Type':'application/json'
       }
-    }).then(res => res.json()).then(data => setJobs(data))
+    }).then(res => res.json()).then(data => {
+
+      let available = []
+
+      data.forEach(job => {
+        if(!job.closed){
+          available.push(job)
+        }
+      })
+
+      setJobs(available);
+    })
   }, []);
 
 
@@ -76,7 +87,7 @@ export default function Careers(){
                         <p 
                           style={{fontSize : '15px'}}
                         >
-                          {post_date.slice(0,16)}
+                          posted on : {post_date.slice(0,16)}
                         </p>
                       </Col>
                       <Col>

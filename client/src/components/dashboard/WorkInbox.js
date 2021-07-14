@@ -4,6 +4,7 @@ import { GATEWAY_URL } from '../../helper';
 import Message from '../Message';
 import SlideModal from '../SlideModal';
 import Compose from '../Compose';
+import './css/inbox.css'
 
 export default function WorkInbox(){
   const [inbox, setInbox] = useState();
@@ -16,12 +17,19 @@ export default function WorkInbox(){
   const [recipientId, setRecipientId] = useState();
 
   const id = localStorage.getItem('id');
-
+  
   useEffect(() => {
 
     fetch(`${GATEWAY_URL}/email/delivery/inbox/${id}`, {
       method : 'GET'
-    }).then(res => res.json()).then(data => setInbox(data));
+    }).then(res => res.json()).then(data => {
+      
+      if(data){
+        let inbox = data.reverse()
+        setInbox(inbox)
+      }
+      
+    })  
   }, [show, compose, id]);
 
   const openMessage = (id, message) => {
@@ -42,7 +50,7 @@ export default function WorkInbox(){
 
   return (
     <div>
-      <SlideModal show={show} modalStyle='recruitment_modal_Style'>
+      <SlideModal show={show} modalStyle='inbox_modal_Style'>
         <Message 
           onClick={() => setShow(prevState => !prevState)}
           onCompose={() => setCompose(prevState => !prevState)}

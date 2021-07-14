@@ -5,3 +5,18 @@
 .chart_small {
   font-size: 17px;
 }
+
+.job_container {
+  padding-top: 20px;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  position: relative;
+  overflow-y: scroll;
+}
+
+.job_container > div {
+  margin: 20px 10px 0px 10px;
+  background: #fff;
+}

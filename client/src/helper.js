@@ -24,7 +24,7 @@ export const socket = io('http://localhost:5000',{
 
 export const GATEWAY_URL = 'http://104.236.215.216:4000'
 
-export const version = 'v1.45 alpha'
+export const version = 'v1.46 working alpha'
 
 export const months = [
   'January',
@@ -123,6 +123,72 @@ export const getValues = async (employeeId) => {
           })
         }
       })
+    })
+  }
+}
+
+export const changePass = async () => {
+  const token = localStorage.getItem('act');
+  const id = localStorage.getItem('id');
+  const formValues = await Swal.fire({
+  icon: 'warning',
+  title: 'Change Password',
+  html:
+    `
+    <form>
+      <label for='password'>New password</label>
+        <input 
+          id="password" 
+          class="swal2-input"
+          placeholder='password'
+        ><br><br>
+      <label for="verify">Confirm new password</label>
+        <input id="verify" 
+          placeholder='confirm new password' 
+          class="swal2-input"
+        ><br><br>
+    </form>
+    `,
+    focusConfirm: false,
+    preConfirm: () => {
+      return [
+        document.getElementById('password').value.trim(),
+        document.getElementById('verify').value.trim()
+      ]
+    }
+  })
+  if (formValues.value) {
+    if(formValues.value[0] === formValues.value[1]){
+ 
+      fetch(`${GATEWAY_URL}/whr/employee/change/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': `${token}`
+        },
+        body: JSON.stringify({
+          pass: formValues.value[0], 
+        })
+      }).then(res => res.json()).then(done => {
+      
+        if(done){
+          Swal.fire({
+            title: 'Password Changed!',
+            icon: 'success',
+            confirmButtonText: 'Got It'
+          }).then((result) => {
+            if(result.isConfirmed){
+              window.location.reload();
+            }
+          })
+        }
+      })
+    }
+  }else{
+    Swal.fire({
+      title: 'Passwords didn\'t match!',
+      icon: 'error',
+      confirmButtonText: 'OK'
     })
   }
 }

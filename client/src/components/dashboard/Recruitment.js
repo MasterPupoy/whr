@@ -109,6 +109,37 @@ export default function Recruitment(){
       } 
     });
   }
+
+  const closePosition = (position) => {
+    Swal.fire({
+      icon: 'warning',
+      title: ` Close ${position.title} ?`,
+      showCancelButton: true,
+      confirmButtonText: `Yes`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        
+        fetch(`${GATEWAY_URL}/apply/jobs/close/${position?._id}`, {
+          method : 'PUT'
+        }).then(res => res.json()).then(data => {
+          
+          if(data){
+            Swal.fire({
+              icon: 'success',
+              title: 'position closed'
+            })
+          }else{
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+          }
+        });
+      } 
+    });
+  }
   
 
   return(
@@ -154,8 +185,30 @@ export default function Recruitment(){
                                   <span>Applications</span>
                                 </Card.Text>
                                 <p className='posted_by'>Posted by : {jobs.posted_by}</p>
-                                <Button className='interact_button' variant='warning'>Close Position</Button>
-                                <Button className='interact_button' variant='dark'>See Details</Button>
+                                <div style={{textAlign : 'right'}}>
+                                {(jobs.closed) ?
+                                
+                                  <Button 
+                                    className='interact_button' 
+                                    variant='info'
+                                  
+                                    disabled>
+                                    Position Closed
+                                  </Button>
+
+                                  :
+
+                                  <Button 
+                                    className='interact_button' 
+                                    variant='danger'
+                                    onClick={() => {
+                                      closePosition(jobs)
+                                    }} 
+                                    >
+                                      Close Position
+                                  </Button>
+                                }
+                                </div>
                               </Card.Body>
                             </Card>
                           );
@@ -306,7 +359,14 @@ export default function Recruitment(){
                                       textAlign : 'center'
                                     }}
                                   >
-                                    {(candidate.rejected) ? 'Rejected' : 'For Review'}
+                                    {(candidate.rejected && candidate.application_status === 2 && candidate.hired) ? 'Rejected' : null}
+                                    {(!candidate.rejected && candidate.application_status === 2 && candidate.hired) ? 'Passed' : null}
+                                    {
+                                      (candidate.application_status === 2 && !candidate.rejected && !candidate.hired) ? 
+                                        'For Review' 
+                                        :
+                                        null
+                                    }
                                   </td>
                                   <td>{candidate.expected_compensation}</td>
                                   <td>{candidate.phone_numbers}</td>

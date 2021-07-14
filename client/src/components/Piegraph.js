@@ -126,8 +126,8 @@ export default function PieChart(){
   
   return (
     <div style={{
-      width : '70%',
-      paddingLeft : '300px',
+      width : '100%',
+      paddingLeft : '200px',
     }}>
       <p
         style={{

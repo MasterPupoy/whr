@@ -158,4 +158,18 @@ module.exports.editDetails = (params, updates) => {
 };
 
 
+// change password
+module.exports.changePass = (params, updates) => {
+  return Employee.findByIdAndUpdate(params, { $set : {
+    password : bcrypt.hashSync(updates, 10)
+  }}, { new : true})
+  .then((employee, err) => {
+    if(err){
+      handlErr(err)
+    }
+    return employee
+  });
+};
+
+
 

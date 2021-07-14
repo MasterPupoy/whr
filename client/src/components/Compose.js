@@ -9,7 +9,7 @@ export default function Compose({ onClick, recipient, subj, recipientId }){
   const [employees, setEmployees] = useState();
   const cid = localStorage.getItem('cid');
   const id = localStorage.getItem('id');
-  const to = useRef((recipient) ? recipient : null);
+  const to = useRef();
   const subject = useRef();
   const content = useRef();
 
@@ -29,7 +29,8 @@ export default function Compose({ onClick, recipient, subj, recipientId }){
 
   const sendMessage = (e) => {
     e.preventDefault();
-    
+
+
     fetch(`${GATEWAY_URL}/email/delivery/send`, {
       method : 'POST',
       headers : {
@@ -45,7 +46,7 @@ export default function Compose({ onClick, recipient, subj, recipientId }){
     }).then(res => res.json()).then(data => {
       if(data){
         onClick();
-        to.current.value = null
+       
         subject.current.value = null
         content.current.value = null
         
@@ -102,13 +103,13 @@ export default function Compose({ onClick, recipient, subj, recipientId }){
           {(subj) ? 
               <Form.Control type="text" value={subj} ref={subject} readOnly/>
             :
-              <Form.Control type="text" placeholder="Subject" ref={subject}/>
+              <Form.Control type="text" placeholder="Subject" ref={subject} required />
           }
         </Form.Group>
   
-        <Form.Group controlId="exampleForm.ControlTextarea1">
+        <Form.Group controlId="message">
           <Form.Label></Form.Label>
-          <Form.Control as="textarea" rows={10} placeholder='Message' ref={content} />
+          <Form.Control as="textarea" rows={10} placeholder='Message' ref={content}  required/>
         </Form.Group>
 
         <Button type='submit'>Send</Button>

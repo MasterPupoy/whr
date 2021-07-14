@@ -36,7 +36,7 @@ export default function ApplicationModal(props){
 
   const apply = async (e) => {
     e.preventDefault()
-    console.log('fired');
+ 
 
     await fetch(`${GATEWAY_URL}/apply/openings/register`, {
       method : 'POST',
@@ -71,7 +71,28 @@ export default function ApplicationModal(props){
         return fetch(`${GATEWAY_URL}/file/upload/${applicant._id}`, {
           method: 'POST',
           body : formData
-        }).then(res => res.text()).then(data => (data) ? setSuccess(true) : null);
+        }).then(res => res.text()).then(data => {
+          if(data){
+            setSuccess(true)
+            const Toast = Swal.mixin({
+              toast: true,
+              position: 'top-end',
+              showConfirmButton: false,
+              timer: 3000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+              }
+            })
+          
+            Toast.fire({
+              icon: 'success',
+              title: 'Application Sent'
+            })
+
+          };
+        });
        }
 
        const Toast = Swal.mixin({
@@ -216,7 +237,7 @@ export default function ApplicationModal(props){
 
                 <Form.Group controlId="formFile" style={{paddingTop : '30px'}} className="mb-3">
                   <Form.Label>Upload Resume</Form.Label>  
-                  <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} disabled/>
+                  <Form.Control type="file" onChange={(e) => setFile(e.target.files[0])} />
                 </Form.Group>
 
                 <Button type='submit' variant='success'>Apply</Button>
