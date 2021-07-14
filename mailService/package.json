@@ -1,0 +1,17 @@
+{
+  "name": "mailservice",
+  "version": "1.0.0",
+  "description": "smtp server for handling emails",
+  "main": "mail.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "nodemon ./mail.js"
+  },
+  "author": "Aryan S. Delloson",
+  "license": "ISC",
+  "dependencies": {
+    "mailparser": "^3.2.0",
+    "nodemon": "^2.0.12",
+    "smtp-server": "^3.9.0"
+  }
+}
