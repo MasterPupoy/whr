@@ -1,5 +1,11 @@
 const router = require('express').Router();
 const mailController = require('../controllers/mailControllers');
+const Imap = require('imap');
+const imaps = require('imap-simple');
+const parser = require('mailparser').simpleParser;
+const inspect = require('util').inspect;
+const _ = require('lodash');
+
 
 router.post('/sendMail', (req, res) => {
   let params ={
@@ -18,6 +24,64 @@ router.post('/sendMail', (req, res) => {
     console.log(error);  
   }
 });
+
+router.post('/inbox', async (req, res) => {
+  const config = {
+    imap: {
+      user: req.body.user,
+      password: req.body.password,
+      host: 'mail.socialme.com',
+      port: 993,
+      tls: true,
+      tlsOptions: {
+        rejectUnauthorized : false
+      }
+    }
+  }
+
+  imaps.connect(config).then(connection => {
+    return connection.openBox('INBOX').then( async () => {
+      const search = ['ALL'];
+      const fetchOp = {
+        bodies: ['']
+      }
+
+      let emails = await connection.search(search, fetchOp).then(messages => {
+        res.send(messages)
+        imaps.end()
+      })
+    })
+  })
+})
+
+router.post('/read/:uid', (req, res) => {
+   const config = {
+    imap: {
+      user: req.body.user,
+      password: req.body.password,
+      host: 'mail.socialme.com',
+      port: 993,
+      tls: true,
+      tlsOptions: {
+        rejectUnauthorized : false
+      }
+    }
+  }
+
+  imaps.connect(config).then(connection => {
+    return connection.openBox('INBOX').then( async () => {
+      const search = ['ALL'];
+      const fetchOp = {
+        bodies: ['HEADER']
+      }
+
+      return connection.search(search, fetchOp).then(messages => {
+        
+      })
+    })
+  })
+
+})
 
 // send message
 router.post('/send', (req, res) => {

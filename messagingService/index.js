@@ -2,6 +2,8 @@ const express = require('express');
 const emailService = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const Imap = require('imap');
+const parser = require('mailparser').simpleParser;
 
 // an http server that creates an instance of express
 const httpServer = require('http').createServer(emailService)
@@ -12,9 +14,7 @@ const io = require('socket.io')(httpServer, {
   }
 });
 
-
 const mailRoutes = require('./routes/emailRoutes');
-
 
 require('dotenv').config();
 
@@ -39,6 +39,7 @@ emailService.use('/delivery', mailRoutes);
 httpServer.listen(PORT, () => {
   console.log(`Message service running on PORT : ${PORT}`);
 });
+
 
 io.use((socket, next) => {
   const sessionID = socket.handshake.auth.sessionID;
