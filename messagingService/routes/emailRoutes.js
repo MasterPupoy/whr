@@ -74,7 +74,7 @@ router.post('/read/:uid', (req, res) => {
       }
 
       return connection.search(search, fetchOp).then(messages => {
-        
+        //insert add flag feature to message
       })
     })
   })
