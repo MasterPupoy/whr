@@ -2,8 +2,6 @@ const router = require('express').Router();
 const mailController = require('../controllers/mailControllers');
 const Imap = require('imap');
 const imaps = require('imap-simple');
-const parser = require('mailparser').simpleParser;
-const inspect = require('util').inspect;
 const _ = require('lodash');
 
 
