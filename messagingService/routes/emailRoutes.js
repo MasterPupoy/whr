@@ -2,7 +2,7 @@ const router = require('express').Router();
 const mailController = require('../controllers/mailControllers');
 const Imap = require('imap');
 const imaps = require('imap-simple');
-const parser = require('mailparser').simpleParser;
+const simpleParser = require('mailparser').simpleParser;
 const inspect = require('util').inspect;
 const _ = require('lodash');
 
@@ -47,8 +47,32 @@ router.post('/inbox', async (req, res) => {
       }
 
       let emails = await connection.search(search, fetchOp).then(messages => {
-        res.send(messages)
-        imaps.end()
+        let mails = messages.map(item => {
+          let all = _.find(item.parts, { "which": "" })
+          let id = item.attributes.uid;
+          let stat = item.attributes.flags.includes('\\Seen')
+          let idHeader = "Imap-Id: "+id+"\r\n";
+          let status = `${stat}\r\n`;
+
+          return simpleParser(status+idHeader+all.body).then(mail => {
+            return mail
+          })
+        })
+
+        // messages.forEach(item => {
+        //   let all = _.find(item.parts, { "which": "" })
+        //   let id = item.attributes.uid;
+        //   let idHeader = "Imap-Id: "+id+"\r\n";
+
+        //   simpleParser(idHeader+all.body).then(mail => {
+        //     mails.push(mail)
+        //   })
+        // })
+
+        return Promise.all(mails)
+      }).then(mails => {
+        res.send(mails)
+        connection.end()
       })
     })
   })
