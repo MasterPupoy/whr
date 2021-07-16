@@ -13,6 +13,8 @@ This project is built with the intention of following the microservices architec
                                           ---> fileService --> mongoDB
                                           |
                                           ---> messaginService --> mongoDB
+                                                            |
+                                                            <--> IMAP/SMTP
 
 # Directories
 
@@ -26,7 +28,7 @@ This project is built with the intention of following the microservices architec
   <dt>fileService</dt>
   <dd>Service for file uploads and downloads</dd>
   <dt>messagingService</dt>
-  <dd>Service that handles internal messages and mails</dd>
+  <dd>Service that handles internal messages and emails</dd>
 </dl>
 
 # Release notes
