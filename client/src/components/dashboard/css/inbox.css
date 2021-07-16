@@ -91,3 +91,34 @@
   border: 1px solid rgba(153, 146, 146);
   font-family: "Roboto", sans-serif;
 }
+
+.loadingg {
+  width: 100%;
+  text-align: center;
+  padding: 100px 300px;
+}
+
+.refresh {
+  color: #a9a9a9;
+  font-size: 30px;
+
+}
+
+.refresh:hover {
+  border-radius: 100px;
+  border: 1px solid #d5d5d5;
+  color: #a5a5a5;
+  cursor: pointer;
+}
+
+.trash {
+  color: #a9a9a9;
+  font-size: 25px;
+ 
+  padding: 0px;
+}
+
+.trash:hover {
+  border: 2px solid #a9a9a9;
+  border-radius: 20px;
+}

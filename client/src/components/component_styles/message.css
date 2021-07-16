@@ -4,3 +4,7 @@
   width: 70px;
   border-radius: 5px;
 }
+
+.backbutton:hover {
+  color : #d5d5d5;
+}
