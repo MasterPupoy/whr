@@ -25,6 +25,7 @@ router.post('/sendMail', (req, res) => {
   }
 });
 
+//get mail inbox
 router.post('/inbox', async (req, res) => {
   const config = {
     imap: {
@@ -51,7 +52,7 @@ router.post('/inbox', async (req, res) => {
           let all = _.find(item.parts, { "which": "" })
           let id = item.attributes.uid;
           let stat = item.attributes.flags.includes('\\Seen')
-          let idHeader = "Imap-Id: "+id+"\r\n";
+          let idHeader = `${id}\r\n`;
           let status = `${stat}\r\n`;
 
           return simpleParser(status+idHeader+all.body).then(mail => {
@@ -59,25 +60,16 @@ router.post('/inbox', async (req, res) => {
           })
         })
 
-        // messages.forEach(item => {
-        //   let all = _.find(item.parts, { "which": "" })
-        //   let id = item.attributes.uid;
-        //   let idHeader = "Imap-Id: "+id+"\r\n";
-
-        //   simpleParser(idHeader+all.body).then(mail => {
-        //     mails.push(mail)
-        //   })
-        // })
-
         return Promise.all(mails)
       }).then(mails => {
         res.send(mails)
         connection.end()
       })
     })
-  })
+  }).catch(err => console.log(err))
 })
 
+// set to read
 router.post('/read/:uid', (req, res) => {
    const config = {
     imap: {
@@ -94,18 +86,57 @@ router.post('/read/:uid', (req, res) => {
 
   imaps.connect(config).then(connection => {
     return connection.openBox('INBOX').then( async () => {
-      const search = ['ALL'];
+      const search = [req.params.uid];
       const fetchOp = {
-        bodies: ['HEADER']
+        bodies: ['']
       }
 
-      return connection.search(search, fetchOp).then(messages => {
-        
+      return connection.addFlags(req.params.uid, '\\Seen', (mail, err) => {
+        if(err){
+          console.log(err)
+        }
+
+        console.log(mail)
       })
     })
-  })
+  }).catch(err => console.log(err))
 
 })
+
+// delete email
+router.post('/delete/:uid', (req, res) => {
+   const config = {
+    imap: {
+      user: req.body.user,
+      password: req.body.password,
+      host: 'mail.socialme.com',
+      port: 993,
+      tls: true,
+      tlsOptions: {
+        rejectUnauthorized : false
+      }
+    }
+  }
+
+  imaps.connect(config).then(connection => {
+    return connection.openBox('INBOX').then( async () => {
+      const search = [req.params.uid];
+      const fetchOp = {
+        bodies: ['']
+      }
+
+      return connection.deleteMessage(req.params.uid, (mail, err) => {
+        if(err){
+          console.log(err)
+        }
+
+        console.log(mail)
+      })
+    })
+  }).catch(err => console.log(err))
+
+})
+
 
 // send message
 router.post('/send', (req, res) => {
